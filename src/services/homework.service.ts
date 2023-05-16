@@ -1,9 +1,7 @@
 import axios from "axios";
 import { BACKEND_URL } from "../constants/service";
-import {
-	HomeworkServiceType,
-	HomeworkType,
-} from "../types/services/HomeworkServiceType";
+import { HomeworkServiceType } from "../types/services/HomeworkServiceType";
+import { HomeworkType } from "../constants/homework";
 
 export const HomeworkService: HomeworkServiceType = {
 	create: async (discord_id, channel_id, body) => {

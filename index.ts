@@ -18,17 +18,17 @@ client.once(Events.ClientReady, async (client: Client) => {
 
 client.on("interactionCreate", async (interaction: BaseInteraction) => {
 	if (interaction.isChatInputCommand()) {
-		commands[interaction.commandName].onCommandExecuted(interaction);
+		await commands[interaction.commandName].onCommandExecuted(interaction);
 	} else if (interaction.isButton()) {
-		commands[
+		await commands[
 			String(interaction.message.interaction?.commandName)
 		].onButtonPressed?.(interaction);
 	} else if (interaction.isStringSelectMenu()) {
-		commands[
+		await commands[
 			String(interaction.message.interaction?.commandName)
 		].onMenuSelected?.(interaction);
 	} else if (interaction.isAutocomplete()) {
-		commands[String(interaction.commandName)].onAutoCompleteInputed?.(
+		await commands[String(interaction.commandName)].onAutoCompleteInputed?.(
 			interaction
 		);
 	}

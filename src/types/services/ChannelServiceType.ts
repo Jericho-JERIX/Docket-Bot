@@ -1,3 +1,17 @@
+import { DocketFile } from "./FileServiceType";
+
+export type DocketChannel = {
+	channel_id: string;
+	file_id: number;
+	can_edit: boolean;
+	enable_notification: boolean;
+};
+
+export type ChannelServiceOpenRespond = {
+	file: DocketFile;
+	channel: DocketChannel;
+};
+
 export type ChannelServiceType = {
 	getAll: () => Promise<any>;
 	openFile: (
