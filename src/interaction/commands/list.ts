@@ -30,7 +30,6 @@ export const List: SlashCommand = {
 	},
 
 	async onButtonPressed(interaction) {
-		console.log("cid", interaction.customId);
 		const message = await listHomeworksByChannelId(
 			interaction.channelId,
 			interaction.customId as HomeworkType

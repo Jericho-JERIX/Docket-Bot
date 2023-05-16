@@ -16,6 +16,8 @@ export type DocketHomework = {
 
 export type HomeworkServiceGetAllResponse = {
 	file: DocketFile;
+	total_homework_count: number;
+	type_homework_count: number;
 	homeworks: DocketHomework[];
 };
 

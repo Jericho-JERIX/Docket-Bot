@@ -6,6 +6,9 @@ import { SlashCommandObject } from "../types/SlashCommandObject";
 import { Open } from "./commands/open";
 import { List } from "./commands/list";
 import { Add } from "./commands/add";
+import { Edit } from "./commands/edit";
+import { Delete } from "./commands/delete";
+import { EditChannel } from "./commands/editChannel";
 
 dotenv.config();
 
@@ -16,7 +19,7 @@ const rest = new REST({
 }).setToken(TOKEN);
 
 export async function registerCommands(): Promise<SlashCommandObject> {
-	const commands = [Ping, Open, List, Add];
+	const commands = [Open, List, Add, Edit, Delete, EditChannel];
 
 	let commandsObject: SlashCommandObject = {};
 

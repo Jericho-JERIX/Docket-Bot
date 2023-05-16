@@ -12,6 +12,11 @@ export type ChannelServiceOpenRespond = {
 	channel: DocketChannel;
 };
 
+export type ChannelServiceEditRequest = {
+	can_edit: boolean;
+	enable_notification: boolean;
+};
+
 export type ChannelServiceType = {
 	getAll: () => Promise<any>;
 	openFile: (
@@ -19,5 +24,9 @@ export type ChannelServiceType = {
 		channel_id: string,
 		file_id: string
 	) => Promise<any>;
-	edit: (discord_id: string, channel_id: string, body: any) => Promise<any>;
+	edit: (
+		discord_id: string,
+		channel_id: string,
+		body: ChannelServiceEditRequest
+	) => Promise<any>;
 };

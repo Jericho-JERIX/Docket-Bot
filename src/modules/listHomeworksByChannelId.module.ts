@@ -15,6 +15,8 @@ export async function listHomeworksByChannelId(
 	const message = HomeworkList(
 		homeworkResponse.file,
 		homeworkResponse.homeworks,
+		homeworkResponse.total_homework_count,
+		homeworkResponse.type_homework_count,
 		type
 	);
 

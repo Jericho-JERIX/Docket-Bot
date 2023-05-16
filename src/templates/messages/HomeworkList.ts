@@ -17,20 +17,19 @@ import { SlashCommandInteractionMessage } from "../../types/SlashCommandInteract
 export function HomeworkList(
 	file: DocketFile,
 	homeworks: DocketHomework[],
+	totalCount: number,
+	typeCount: number,
 	type: HomeworkType
 ): SlashCommandInteractionMessage {
 	let filteredHomework = homeworks.filter(
 		(homework) => homework.timestamp * 1000 >= Date.now()
 	);
-	const totalHomeworks = filteredHomework.length;
 
 	if (type !== HomeworkType.ALL) {
 		filteredHomework = filteredHomework.filter(
 			(homework) => homework.type === type
 		);
 	}
-
-	const totalTypeHomeworks = filteredHomework.length;
 
 	const homeworkCards = filteredHomework.map((homework) =>
 		HomeworkCard(homework)
@@ -40,19 +39,17 @@ export function HomeworkList(
 		return {
 			content: `${Title()}\n\`\`\`📂 File: ${
 				file.filename
-			} (${totalHomeworks}) >> ${
+			} (${totalCount}) >> ${
 				HomeworkTypeIcon[type]
-			} ${type} (${totalTypeHomeworks})\`\`\`${
-				totalTypeHomeworks == 0
-					? EmptyMessage()
-					: homeworkCards.join("\n")
+			} ${type} (${typeCount})\`\`\`${
+				typeCount == 0 ? EmptyMessage() : homeworkCards.join("\n")
 			}`,
 			components: [TypeButton()],
 		};
 	} else {
 		return {
-			content: `${Title()}\n${FileHeader(file.filename, totalHomeworks)}${
-				totalHomeworks == 0 ? EmptyMessage() : homeworkCards.join("\n")
+			content: `${Title()}\n${FileHeader(file.filename, totalCount)}${
+				totalCount == 0 ? EmptyMessage() : homeworkCards.join("\n")
 			}`,
 			components: [TypeButton()],
 		};
