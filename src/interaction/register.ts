@@ -4,6 +4,8 @@ import { SlashCommand } from "../types/SlashCommand";
 import * as dotenv from "dotenv";
 import { SlashCommandObject } from "../types/SlashCommandObject";
 import { Open } from "./commands/open";
+import { List } from "./commands/list";
+import { Add } from "./commands/add";
 
 dotenv.config();
 
@@ -14,7 +16,7 @@ const rest = new REST({
 }).setToken(TOKEN);
 
 export async function registerCommands(): Promise<SlashCommandObject> {
-	const commands = [Ping, Open];
+	const commands = [Ping, Open, List, Add];
 
 	let commandsObject: SlashCommandObject = {};
 
@@ -26,7 +28,7 @@ export async function registerCommands(): Promise<SlashCommandObject> {
 		await rest.put(Routes.applicationCommands(CLIENT_ID), {
 			body: commands,
 		});
-		console.log("Successfully registered commands.", commands);
+		console.log("Successfully registered commands.");
 		return commandsObject;
 	} catch (error) {
 		console.error(error);

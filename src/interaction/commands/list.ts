@@ -16,28 +16,12 @@ import { HomeworkServiceGetAllResponse } from "../../types/services/HomeworkServ
 import { HomeworkList } from "../../templates/messages/HomeworkList";
 import { listHomeworksByChannelId } from "../../modules/listHomeworksByChannelId.module";
 
-export const Open: SlashCommand = {
-	name: "open",
-	description: "Open a file for this channel",
-	options: [
-		{
-			name: "file",
-			description: "The file to open",
-			type: ApplicationCommandOptionType.String,
-			required: true,
-			autocomplete: true,
-		},
-	],
+export const List: SlashCommand = {
+	name: "list",
+	description: "List all homeworks",
+	options: [],
 
 	async onCommandExecuted(interaction) {
-		const fileId = interaction.options.getString("file");
-
-		await ChannelService.openFile(
-			interaction.user.id,
-			interaction.channelId,
-			String(fileId)
-		);
-
 		const message = await listHomeworksByChannelId(
 			interaction.channelId,
 			HomeworkType.ALL
@@ -46,24 +30,11 @@ export const Open: SlashCommand = {
 	},
 
 	async onButtonPressed(interaction) {
+		console.log("cid", interaction.customId);
 		const message = await listHomeworksByChannelId(
 			interaction.channelId,
 			interaction.customId as HomeworkType
 		);
 		await interaction.update(message);
-	},
-
-	async onAutoCompleteInputed(interaction) {
-		const response = await FileService.getAll(interaction.user.id);
-		const fileResponse: FileServiceGetAllRespond = response.data;
-
-		const choices: SlashCommandOptionChoice[] = fileResponse.files.map(
-			(file) => ({
-				name: `📁 ${kebabToCapital(file.filename)}`,
-				value: String(file.file_id),
-			})
-		);
-
-		await interaction.respond(choices);
 	},
 };

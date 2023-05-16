@@ -19,17 +19,37 @@ export type HomeworkServiceGetAllResponse = {
 	homeworks: DocketHomework[];
 };
 
+export type HomeworkSeriveCreateRequest = {
+	date: number;
+	month: number;
+	year: number;
+	type: HomeworkType;
+	label: string;
+};
+
+export type HomeworkSeriveUpdateRequest = {
+	date?: number;
+	month?: number;
+	year?: number;
+	type?: HomeworkType;
+	label?: string;
+};
+
 export type HomeworkServiceType = {
 	getAll: (
 		channel_id: string,
 		type: HomeworkType | undefined
 	) => Promise<any>;
-	create: (discord_id: string, channel_id: string, body: any) => Promise<any>;
-	edit: (
+	create: (
+		discord_id: string,
+		channel_id: string,
+		body: HomeworkSeriveCreateRequest
+	) => Promise<any>;
+	update: (
 		discord_id: string,
 		channel_id: string,
 		homework_id: string,
-		body: any
+		body: HomeworkSeriveUpdateRequest
 	) => Promise<any>;
 	delete: (
 		discord_id: string,

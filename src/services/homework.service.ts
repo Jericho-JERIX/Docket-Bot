@@ -31,7 +31,7 @@ export const HomeworkService: HomeworkServiceType = {
 				return err.response;
 			});
 	},
-	edit: async (discord_id, channel_id, homework_id, body) => {
+	update: async (discord_id, channel_id, homework_id, body) => {
 		return axios
 			.put(
 				`${BACKEND_URL}/account/${discord_id}/channel/${channel_id}/homework/${homework_id}`,

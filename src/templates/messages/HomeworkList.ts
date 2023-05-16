@@ -1,4 +1,8 @@
-import { InteractionReplyOptions, MessagePayload } from "discord.js";
+import {
+	InteractionReplyOptions,
+	InteractionUpdateOptions,
+	MessagePayload,
+} from "discord.js";
 import { HomeworkType, HomeworkTypeIcon } from "../../constants/homework";
 import { HomeworkService } from "../../services/homework.service";
 import { DocketFile } from "../../types/services/FileServiceType";
@@ -8,12 +12,13 @@ import { FileHeader } from "../components/FileHeader";
 import { HomeworkCard } from "../components/HomeworkCard";
 import { TypeButton } from "../components/TypeButton";
 import { Title } from "../components/Title";
+import { SlashCommandInteractionMessage } from "../../types/SlashCommandInteractionMessage";
 
 export function HomeworkList(
 	file: DocketFile,
 	homeworks: DocketHomework[],
 	type: HomeworkType
-): InteractionReplyOptions {
+): SlashCommandInteractionMessage {
 	let filteredHomework = homeworks.filter(
 		(homework) => homework.timestamp * 1000 >= Date.now()
 	);

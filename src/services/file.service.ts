@@ -26,7 +26,7 @@ export const FileService: FileServiceType = {
 				return err.response;
 			});
 	},
-	edit: async (discord_id, file_id, body) => {
+	update: async (discord_id, file_id, body) => {
 		return axios
 			.put(`${BACKEND_URL}/account/${discord_id}/file/${file_id}`, body)
 			.then((res) => {

@@ -7,6 +7,8 @@ import { DocketHomework } from "../../types/services/HomeworkServiceType";
 export function HomeworkCard(homework: DocketHomework): string {
 	const hw: PopulatedDocketHomework = populateDocketHomework(homework);
 
+	console.log("homeowrk", homework, hw);
+
 	const shorthenDayName =
 		ShorthenDayName[
 			hw.day_name.toUpperCase() as keyof typeof ShorthenDayName

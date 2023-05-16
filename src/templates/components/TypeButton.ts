@@ -1,22 +1,23 @@
 import { ActionRowBuilder, ButtonBuilder, ButtonStyle } from "discord.js";
+import { HomeworkType } from "../../constants/homework";
 
 export function TypeButton(): ActionRowBuilder<any> {
 	return new ActionRowBuilder().addComponents(
 		new ButtonBuilder()
 			.setLabel("📋 All")
 			.setStyle(ButtonStyle.Secondary)
-			.setCustomId("homeworklist-Type-ALL"),
+			.setCustomId(HomeworkType.ALL),
 		new ButtonBuilder()
 			.setLabel("📝 Assignment")
 			.setStyle(ButtonStyle.Primary)
-			.setCustomId("homeworklist-Type-Assignment"),
+			.setCustomId(HomeworkType.ASSIGNMENT),
 		new ButtonBuilder()
 			.setLabel("🔔 Alert")
 			.setStyle(ButtonStyle.Success)
-			.setCustomId("homeworklist-Type-Alert"),
+			.setCustomId(HomeworkType.ALERT),
 		new ButtonBuilder()
 			.setLabel("🔥 Exam")
 			.setStyle(ButtonStyle.Danger)
-			.setCustomId("homeworklist-Type-Exam")
+			.setCustomId(HomeworkType.EXAM)
 	);
 }
