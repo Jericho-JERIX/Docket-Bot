@@ -1,10 +1,7 @@
 import { Client, Events, GatewayIntentBits } from "discord.js";
 import * as dotenv from "dotenv";
 import { registerCommands } from "./src/interaction/register";
-import { Interaction } from "discord.js";
 import { BaseInteraction } from "discord.js";
-import { CommandInteraction } from "discord.js";
-import { ChatInputCommandInteraction } from "discord.js";
 import { SlashCommandObject } from "./src/types/SlashCommandObject";
 
 dotenv.config();
@@ -14,8 +11,8 @@ const client = new Client({
 	intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildIntegrations],
 });
 
-client.once(Events.ClientReady, async (client) => {
-	console.log(`Ready! Logged in as ${client.user.tag}`);
+client.once(Events.ClientReady, async (client: Client) => {
+	console.log(`Ready! Logged in as ${client.user?.tag}`);
 	commands = await registerCommands();
 });
 
