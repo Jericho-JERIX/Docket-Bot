@@ -6,6 +6,7 @@ import { HomeworkSeriveCreateRequest } from "../../../types/services/HomeworkSer
 import { HomeworkType } from "../../../constants/homework";
 import { getYear } from "../../../modules/getYear.module";
 import { listHomeworksByChannelId } from "../../../modules/listHomeworksByChannelId.module";
+import { NoHomeworkPermissionError } from "../../../templates/messages/errors/NoHomeworkPermissionError";
 
 const TypeChoices: SlashCommandOptionChoice[] = [
 	{ name: "📝 Assignment (Default)", value: "ASSIGNMENT" },
@@ -64,11 +65,16 @@ export const Add: SlashCommand = {
 			type: homeworkType as HomeworkType,
 		};
 
-		await HomeworkService.create(
+		const response = await HomeworkService.create(
 			interaction.user.id,
 			interaction.channelId,
 			body
 		);
+
+		if (response.status === 401) {
+			await interaction.reply(NoHomeworkPermissionError());
+			return;
+		}
 
 		const message = await listHomeworksByChannelId(
 			interaction.channelId,

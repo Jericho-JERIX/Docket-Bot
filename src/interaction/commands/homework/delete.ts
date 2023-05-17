@@ -11,6 +11,7 @@ import { HomeworkCard } from "../../../templates/components/HomeworkCard";
 import { ClearedHomeworkCard } from "../../../templates/components/ClearedHomeworkCard";
 import { listHomeworksByChannelId } from "../../../modules/listHomeworksByChannelId.module";
 import { getAllHomeworkChoices } from "../../../modules/getAllHomeworkChoices.module";
+import { NoHomeworkPermissionError } from "../../../templates/messages/errors/NoHomeworkPermissionError";
 
 const TypeChoices: SlashCommandOptionChoice[] = [
 	{ name: "📝 Assignment", value: "ASSIGNMENT" },
@@ -49,11 +50,16 @@ export const Delete: SlashCommand = {
 			return;
 		}
 
-		await HomeworkService.delete(
+		const response = await HomeworkService.delete(
 			interaction.user.id,
 			interaction.channelId,
 			String(homeworkId)
 		);
+
+		if (response.status === 401) {
+			await interaction.reply(NoHomeworkPermissionError());
+			return;
+		}
 
 		const message = await listHomeworksByChannelId(
 			interaction.channelId,

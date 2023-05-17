@@ -7,6 +7,8 @@ import {
 } from "../../../types/services/ChannelServiceType";
 import { ChannelService } from "../../../services/channel.service";
 import { NotOpenCollectionError } from "../../../templates/messages/errors/NotOpenCollectionError";
+import { canManageThisChannel } from "../../../modules/canManageThisChannel.module";
+import { NoChannelPermissionnError } from "../../../templates/messages/errors/NoChannelPermissionnError";
 
 export const EditChannel: SlashCommand = {
 	name: "editchannel",
@@ -30,6 +32,22 @@ export const EditChannel: SlashCommand = {
 		const enableNotification = interaction.options.getBoolean(
 			"enable-notification"
 		);
+
+		if (!interaction.guild) {
+			return;
+		}
+
+		if (
+			!canManageThisChannel(
+				interaction.guild,
+				interaction.user.id,
+				interaction.channelId
+			)
+		) {
+			await interaction.reply(NoChannelPermissionnError());
+			return;
+		}
+
 		const anyoneCanEdit = interaction.options.getBoolean("anyone-can-edit");
 
 		let body: ChannelServiceEditRequest = {};
