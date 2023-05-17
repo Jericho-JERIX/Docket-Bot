@@ -1,8 +1,8 @@
 import { Client, Events, GatewayIntentBits } from "discord.js";
 import * as dotenv from "dotenv";
-import { registerCommands } from "./src/interaction/register";
+import { registerCommands } from "./interaction/register";
 import { BaseInteraction } from "discord.js";
-import { SlashCommandObject } from "./src/types/SlashCommandObject";
+import { SlashCommandObject } from "./types/SlashCommandObject";
 
 dotenv.config();
 let commands: SlashCommandObject;
