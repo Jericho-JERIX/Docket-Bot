@@ -15,6 +15,7 @@ import { HomeworkType } from "../../../constants/homework";
 import { HomeworkServiceGetAllResponse } from "../../../types/services/HomeworkServiceType";
 import { HomeworkList } from "../../../templates/messages/HomeworkList";
 import { listHomeworksByChannelId } from "../../../modules/listHomeworksByChannelId.module";
+import { getAllFilesChoices } from "../../../modules/getAllFilesChoices.module";
 
 export const Open: SlashCommand = {
 	name: "open",
@@ -54,16 +55,7 @@ export const Open: SlashCommand = {
 	},
 
 	async onAutoCompleteInputed(interaction) {
-		const response = await FileService.getAll(interaction.user.id);
-		const fileResponse: FileServiceGetAllRespond = response.data;
-
-		const choices: SlashCommandOptionChoice[] = fileResponse.files.map(
-			(file) => ({
-				name: `📁 ${kebabToCapital(file.filename)}`,
-				value: String(file.file_id),
-			})
-		);
-
+		const choices = await getAllFilesChoices(interaction.user.id);
 		await interaction.respond(choices);
 	},
 };

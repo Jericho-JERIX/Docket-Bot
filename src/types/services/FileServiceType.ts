@@ -23,6 +23,8 @@ export type FileServiceUpdateRequest = {
 	filename: string;
 };
 
+export type FileServiceUpdateResponse = DocketFile;
+
 export type FileServiceType = {
 	getAll: (discord_id: string) => Promise<any>;
 	create: (

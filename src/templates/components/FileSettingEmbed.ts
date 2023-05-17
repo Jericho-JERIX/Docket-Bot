@@ -2,7 +2,7 @@ import { EmbedBuilder } from "discord.js";
 
 export function FileSettingEmbed(
 	description: string,
-	footerText: string
+	footerText?: string
 ): EmbedBuilder {
 	let embed = new EmbedBuilder()
 		.setTitle("📂 Flie Setting")
