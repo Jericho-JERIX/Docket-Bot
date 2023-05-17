@@ -1,11 +1,11 @@
 import { ApplicationCommandOptionType } from "discord.js";
-import { SlashCommand } from "../../types/SlashCommand";
-import { ChannelDetail } from "../../templates/messages/ChannelDetail";
+import { SlashCommand } from "../../../types/SlashCommand";
+import { ChannelDetail } from "../../../templates/messages/ChannelDetail";
 import {
 	ChannelServiceEditRequest,
 	DocketChannel,
-} from "../../types/services/ChannelServiceType";
-import { ChannelService } from "../../services/channel.service";
+} from "../../../types/services/ChannelServiceType";
+import { ChannelService } from "../../../services/channel.service";
 
 export const EditChannel: SlashCommand = {
 	name: "editchannel",

@@ -3,18 +3,18 @@ import {
 	ApplicationCommandType,
 	InteractionUpdateOptions,
 } from "discord.js";
-import { SlashCommand } from "../../types/SlashCommand";
-import { FileService } from "../../services/file.service";
-import { FileServiceGetAllRespond } from "../../types/services/FileServiceType";
-import { SlashCommandOptionChoice } from "../../types/SlashCommandOption";
-import { kebabToCapital } from "../../modules/kebabToCapital.module";
-import { ChannelService } from "../../services/channel.service";
-import { ChannelServiceOpenRespond } from "../../types/services/ChannelServiceType";
-import { HomeworkService } from "../../services/homework.service";
-import { HomeworkType } from "../../constants/homework";
-import { HomeworkServiceGetAllResponse } from "../../types/services/HomeworkServiceType";
-import { HomeworkList } from "../../templates/messages/HomeworkList";
-import { listHomeworksByChannelId } from "../../modules/listHomeworksByChannelId.module";
+import { SlashCommand } from "../../../types/SlashCommand";
+import { FileService } from "../../../services/file.service";
+import { FileServiceGetAllRespond } from "../../../types/services/FileServiceType";
+import { SlashCommandOptionChoice } from "../../../types/SlashCommandOption";
+import { kebabToCapital } from "../../../modules/kebabToCapital.module";
+import { ChannelService } from "../../../services/channel.service";
+import { ChannelServiceOpenRespond } from "../../../types/services/ChannelServiceType";
+import { HomeworkService } from "../../../services/homework.service";
+import { HomeworkType } from "../../../constants/homework";
+import { HomeworkServiceGetAllResponse } from "../../../types/services/HomeworkServiceType";
+import { HomeworkList } from "../../../templates/messages/HomeworkList";
+import { listHomeworksByChannelId } from "../../../modules/listHomeworksByChannelId.module";
 
 export const Open: SlashCommand = {
 	name: "open",

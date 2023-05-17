@@ -1,15 +1,15 @@
 import { ApplicationCommandOptionType } from "discord.js";
-import { SlashCommand } from "../../types/SlashCommand";
-import { SlashCommandOptionChoice } from "../../types/SlashCommandOption";
+import { SlashCommand } from "../../../types/SlashCommand";
+import { SlashCommandOptionChoice } from "../../../types/SlashCommandOption";
 import {
 	HomeworkSeriveUpdateRequest,
 	HomeworkServiceGetAllResponse,
-} from "../../types/services/HomeworkServiceType";
-import { HomeworkType } from "../../constants/homework";
-import { HomeworkService } from "../../services/homework.service";
-import { HomeworkCard } from "../../templates/components/HomeworkCard";
-import { ClearedHomeworkCard } from "../../templates/components/ClearedHomeworkCard";
-import { listHomeworksByChannelId } from "../../modules/listHomeworksByChannelId.module";
+} from "../../../types/services/HomeworkServiceType";
+import { HomeworkType } from "../../../constants/homework";
+import { HomeworkService } from "../../../services/homework.service";
+import { HomeworkCard } from "../../../templates/components/HomeworkCard";
+import { ClearedHomeworkCard } from "../../../templates/components/ClearedHomeworkCard";
+import { listHomeworksByChannelId } from "../../../modules/listHomeworksByChannelId.module";
 
 const TypeChoices: SlashCommandOptionChoice[] = [
 	{ name: "📝 Assignment", value: "ASSIGNMENT" },

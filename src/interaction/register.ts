@@ -3,13 +3,13 @@ import { Ping } from "./commands/ping";
 import { SlashCommand } from "../types/SlashCommand";
 import * as dotenv from "dotenv";
 import { SlashCommandObject } from "../types/SlashCommandObject";
-import { Open } from "./commands/open";
-import { List } from "./commands/list";
-import { Add } from "./commands/add";
-import { Edit } from "./commands/edit";
-import { Delete } from "./commands/delete";
-import { EditChannel } from "./commands/editChannel";
-import { CreateFile } from "./commands/createFile";
+import { Open } from "./commands/channel/open";
+import { List } from "./commands/homework/list";
+import { Add } from "./commands/homework/add";
+import { Edit } from "./commands/homework/edit";
+import { Delete } from "./commands/homework/delete";
+import { EditChannel } from "./commands/channel/editChannel";
+import { CreateFile } from "./commands/file/createFile";
 
 dotenv.config();
 
