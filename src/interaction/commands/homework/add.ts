@@ -64,8 +64,6 @@ export const Add: SlashCommand = {
 			type: homeworkType as HomeworkType,
 		};
 
-		console.log(body);
-
 		await HomeworkService.create(
 			interaction.user.id,
 			interaction.channelId,
