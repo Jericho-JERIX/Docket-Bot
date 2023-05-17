@@ -13,8 +13,8 @@ export type ChannelServiceOpenRespond = {
 };
 
 export type ChannelServiceEditRequest = {
-	can_edit: boolean;
-	enable_notification: boolean;
+	can_edit?: boolean;
+	enable_notification?: boolean;
 };
 
 export type ChannelServiceType = {

@@ -9,6 +9,7 @@ import { Add } from "./commands/add";
 import { Edit } from "./commands/edit";
 import { Delete } from "./commands/delete";
 import { EditChannel } from "./commands/editChannel";
+import { CreateFile } from "./commands/createFile";
 
 dotenv.config();
 
@@ -19,7 +20,7 @@ const rest = new REST({
 }).setToken(TOKEN);
 
 export async function registerCommands(): Promise<SlashCommandObject> {
-	const commands = [Open, List, Add, Edit, Delete, EditChannel];
+	const commands = [Open, List, Add, Edit, Delete, EditChannel, CreateFile];
 
 	let commandsObject: SlashCommandObject = {};
 
@@ -31,7 +32,11 @@ export async function registerCommands(): Promise<SlashCommandObject> {
 		await rest.put(Routes.applicationCommands(CLIENT_ID), {
 			body: commands,
 		});
-		console.log("Successfully registered commands.");
+		console.log(
+			`✅ Successfully registered commands.\n- ${commands
+				.map((command) => command.name)
+				.join("\n- ")}`
+		);
 		return commandsObject;
 	} catch (error) {
 		console.error(error);
