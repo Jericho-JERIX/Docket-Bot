@@ -19,11 +19,11 @@ import { getAllFilesChoices } from "../../../modules/getAllFilesChoices.module";
 
 export const Open: SlashCommand = {
 	name: "open",
-	description: "Open a file for this channel",
+	description: "Open a Collection for this channel",
 	options: [
 		{
-			name: "file",
-			description: "The file to open",
+			name: "collection",
+			description: "Select a Collection to be open",
 			type: ApplicationCommandOptionType.String,
 			required: true,
 			autocomplete: true,
@@ -31,7 +31,7 @@ export const Open: SlashCommand = {
 	],
 
 	async onCommandExecuted(interaction) {
-		const fileId = interaction.options.getString("file");
+		const fileId = interaction.options.getString("collection");
 
 		await ChannelService.openFile(
 			interaction.user.id,

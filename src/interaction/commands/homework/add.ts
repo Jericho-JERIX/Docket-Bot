@@ -15,29 +15,29 @@ const TypeChoices: SlashCommandOptionChoice[] = [
 
 export const Add: SlashCommand = {
 	name: "add",
-	description: "Add a to-do item",
+	description: "Add a To-do item",
 	options: [
 		{
 			name: "date",
-			description: "Date of the to-do item",
+			description: "Due date for the To-do item",
 			type: ApplicationCommandOptionType.Integer,
 			required: true,
 		},
 		{
 			name: "month",
-			description: "Month of the to-do item",
+			description: "Due month of the To-do item",
 			type: ApplicationCommandOptionType.Integer,
 			required: true,
 		},
 		{
 			name: "label",
-			description: "Describe the to-do item",
+			description: "Describe what you need to do within this date",
 			type: ApplicationCommandOptionType.String,
 			required: true,
 		},
 		{
 			name: "type",
-			description: "Type of the to-do item",
+			description: "Type of the To-do item (Default: Assignment)",
 			type: ApplicationCommandOptionType.String,
 			required: false,
 			choices: TypeChoices,

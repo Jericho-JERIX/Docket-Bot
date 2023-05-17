@@ -9,7 +9,7 @@ import { ChannelService } from "../../../services/channel.service";
 
 export const EditChannel: SlashCommand = {
 	name: "editchannel",
-	description: "Edit channel",
+	description: "Config this Channel's settings",
 	options: [
 		{
 			name: "enable-notification",

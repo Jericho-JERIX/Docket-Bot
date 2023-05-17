@@ -19,11 +19,11 @@ const TypeChoices: SlashCommandOptionChoice[] = [
 
 export const Delete: SlashCommand = {
 	name: "delete",
-	description: "Delete a homework",
+	description: "Delete a To-do item",
 	options: [
 		{
-			name: "homework",
-			description: "The homework to edit",
+			name: "todo-item",
+			description: "Select a To-do item to be delete",
 			type: ApplicationCommandOptionType.String,
 			required: true,
 			autocomplete: true,
@@ -37,7 +37,7 @@ export const Delete: SlashCommand = {
 	],
 
 	async onCommandExecuted(interaction) {
-		const homeworkId = interaction.options.getString("homework");
+		const homeworkId = interaction.options.getString("todo-item");
 		const confirmation = interaction.options.getString("confirmation");
 
 		if (

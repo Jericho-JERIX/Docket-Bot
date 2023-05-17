@@ -11,11 +11,11 @@ import { getAllFilesChoices } from "../../../modules/getAllFilesChoices.module";
 
 export const DeleteFile: SlashCommand = {
 	name: "deletefile",
-	description: "Delete a file",
+	description: "Delete a Collection",
 	options: [
 		{
-			name: "file",
-			description: "The name of the file that you want to edit",
+			name: "collection",
+			description: "Select a Collection to be delete",
 			type: ApplicationCommandOptionType.String,
 			required: true,
 			autocomplete: true,
@@ -29,7 +29,7 @@ export const DeleteFile: SlashCommand = {
 	],
 
 	async onCommandExecuted(interaction) {
-		const fileId = interaction.options.getString("file");
+		const fileId = interaction.options.getString("collection");
 		const confirmation = interaction.options.getString("confirmation");
 
 		if (
@@ -42,7 +42,7 @@ export const DeleteFile: SlashCommand = {
 
 		await FileService.delete(interaction.user.id, fileId);
 
-		const message = FileSetting(`✅ File has been deleted`);
+		const message = FileSetting(`✅ Collection has been deleted`);
 		await interaction.reply(message);
 	},
 

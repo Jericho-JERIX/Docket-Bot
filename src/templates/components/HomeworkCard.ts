@@ -19,11 +19,7 @@ export function HomeworkCard(homework: DocketHomework): string {
 			"0"
 		)}/${fixSpace(hw.month, 2, "0")}\`] ${
 			hw.alert_icon
-		} **(\`เดี๋ยวนี้!\`)** ${hw.type_icon} \`[${fixSpace(
-			hw.id,
-			4,
-			"0"
-		)}]\` \`${hw.label}\``;
+		} **(\`เดี๋ยวนี้!\`)** ${hw.type_icon} \`${hw.label}\``;
 	} else {
 		return `[\`${shorthenDayName}\`.\`${fixSpace(
 			hw.date,
@@ -32,8 +28,6 @@ export function HomeworkCard(homework: DocketHomework): string {
 		)}/${fixSpace(hw.month, 2, "0")}\`] ${hw.alert_icon} **(\`${fixSpace(
 			hw.day_left,
 			3
-		)}\` วัน)** ${hw.type_icon} \`[${fixSpace(hw.id, 4, "0")}]\` \`${
-			hw.label
-		}\``;
+		)}\` วัน)** ${hw.type_icon} \`${hw.label}\``;
 	}
 }

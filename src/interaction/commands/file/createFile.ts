@@ -11,12 +11,12 @@ import { listHomeworksByChannelId } from "../../../modules/listHomeworksByChanne
 import { HomeworkType } from "../../../constants/homework";
 
 export const CreateFile: SlashCommand = {
-	name: "createfile",
-	description: "Create a file",
+	name: "createcollection",
+	description: "Create a Collection",
 	options: [
 		{
 			name: "filename",
-			description: "The name of the file",
+			description: "Enter the name for this Collection",
 			type: ApplicationCommandOptionType.String,
 			required: true,
 		},
@@ -40,10 +40,10 @@ export const CreateFile: SlashCommand = {
 		const fileResponse: FileServiceCreateResponse = reponse.data;
 
 		const message = FileSetting(
-			`✅ ${FilenameText(
+			`✅ Collection ${FilenameText(
 				fileResponse.file.filename
 			)} has been created and opened in <#${interaction.channelId}>`,
-			"Create your first Todo by using /create command"
+			"Create your first To-do item for this Collection by using /create command"
 		);
 		await interaction.reply(message);
 	},

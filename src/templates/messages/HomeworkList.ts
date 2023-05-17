@@ -37,7 +37,7 @@ export function HomeworkList(
 
 	if (type !== HomeworkType.ALL) {
 		return {
-			content: `${Title()}\n\`\`\`📂 File: ${
+			content: `\`\`\`📂 Collection: ${
 				file.filename
 			} (${totalCount}) >> ${
 				HomeworkTypeIcon[type]
@@ -48,7 +48,7 @@ export function HomeworkList(
 		};
 	} else {
 		return {
-			content: `${Title()}\n${FileHeader(file.filename, totalCount)}${
+			content: `${FileHeader(file.filename, totalCount)}${
 				totalCount == 0 ? EmptyMessage() : homeworkCards.join("\n")
 			}`,
 			components: [TypeButton()],

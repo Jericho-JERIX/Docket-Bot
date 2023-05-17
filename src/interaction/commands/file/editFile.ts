@@ -10,26 +10,26 @@ import { FileSetting } from "../../../templates/messages/FileSetting";
 import { getAllFilesChoices } from "../../../modules/getAllFilesChoices.module";
 
 export const EditFile: SlashCommand = {
-	name: "editfile",
-	description: "Edit a file",
+	name: "editcollection",
+	description: "Edit a Collection",
 	options: [
 		{
-			name: "file",
-			description: "The name of the file that you want to edit",
+			name: "collection",
+			description: "Select a Collection to be edit",
 			type: ApplicationCommandOptionType.String,
 			required: true,
 			autocomplete: true,
 		},
 		{
 			name: "rename",
-			description: "Rename the file",
+			description: "Rename this Collection",
 			type: ApplicationCommandOptionType.String,
 			required: true,
 		},
 	],
 
 	async onCommandExecuted(interaction) {
-		const fileId = interaction.options.getString("file");
+		const fileId = interaction.options.getString("collection");
 		const filename = interaction.options.getString("rename");
 
 		if (!filename || !fileId) {
@@ -47,7 +47,9 @@ export const EditFile: SlashCommand = {
 		const fileResponse: FileServiceUpdateResponse = reponse.data;
 
 		const message = FileSetting(
-			`✅ File has been renamed to ${FilenameText(fileResponse.filename)}`
+			`✅ Collection has been renamed to ${FilenameText(
+				fileResponse.filename
+			)}`
 		);
 		await interaction.reply(message);
 	},
