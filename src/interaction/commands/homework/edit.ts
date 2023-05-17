@@ -10,6 +10,7 @@ import { HomeworkService } from "../../../services/homework.service";
 import { HomeworkCard } from "../../../templates/components/HomeworkCard";
 import { ClearedHomeworkCard } from "../../../templates/components/ClearedHomeworkCard";
 import { listHomeworksByChannelId } from "../../../modules/listHomeworksByChannelId.module";
+import { getAllHomeworkChoices } from "../../../modules/getAllHomeworkChoices.module";
 
 const TypeChoices: SlashCommandOptionChoice[] = [
 	{ name: "📝 Assignment", value: "ASSIGNMENT" },
@@ -99,20 +100,10 @@ export const Edit: SlashCommand = {
 
 	async onAutoCompleteInputed(interaction) {
 		const input = interaction.options.getFocused();
-		const response = await HomeworkService.getAll(
+		const choices = await getAllHomeworkChoices(
 			interaction.channelId,
-			HomeworkType.ALL
+			input
 		);
-
-		const homeworkServiceResponse: HomeworkServiceGetAllResponse =
-			response.data;
-		const filteredHomeworks = homeworkServiceResponse.homeworks
-			.filter((homework) => homework.label.includes(input))
-			.map((homework) => ({
-				name: ClearedHomeworkCard(homework),
-				value: String(homework.homework_id),
-			}));
-
-		await interaction.respond(filteredHomeworks);
+		await interaction.respond(choices);
 	},
 };
