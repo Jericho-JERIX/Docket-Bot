@@ -18,8 +18,7 @@ import { listHomeworksByChannelId } from "../../../modules/listHomeworksByChanne
 
 export const List: SlashCommand = {
 	name: "list",
-	description:
-		"List all To-do items that are in Collection opened in this Channel",
+	description: "List all homeworks",
 	options: [],
 
 	async onCommandExecuted(interaction) {

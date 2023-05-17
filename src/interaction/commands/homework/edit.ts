@@ -19,36 +19,36 @@ const TypeChoices: SlashCommandOptionChoice[] = [
 
 export const Edit: SlashCommand = {
 	name: "edit",
-	description: "Edit a To-do item",
+	description: "Edit a homework",
 	options: [
 		{
-			name: "todo-item",
-			description: "Select a To-do item to be edit",
+			name: "homework",
+			description: "The homework to edit",
 			type: ApplicationCommandOptionType.String,
 			required: true,
 			autocomplete: true,
 		},
 		{
 			name: "date",
-			description: "New due date for this To-do item",
+			description: "Date of the to-do item",
 			type: ApplicationCommandOptionType.Integer,
 			required: false,
 		},
 		{
 			name: "month",
-			description: "New due month for this To-do item",
+			description: "Month of the to-do item",
 			type: ApplicationCommandOptionType.Integer,
 			required: false,
 		},
 		{
 			name: "label",
-			description: "Enter a new label",
+			description: "Describe the to-do item",
 			type: ApplicationCommandOptionType.String,
 			required: false,
 		},
 		{
 			name: "type",
-			description: "Change the type of this To-do item",
+			description: "Type of the to-do item",
 			type: ApplicationCommandOptionType.String,
 			required: false,
 			choices: TypeChoices,
@@ -56,7 +56,7 @@ export const Edit: SlashCommand = {
 	],
 
 	async onCommandExecuted(interaction) {
-		const homeworkId = interaction.options.getString("todo-item");
+		const homeworkId = interaction.options.getString("homework");
 		const date = interaction.options.getInteger("date");
 		const month = interaction.options.getInteger("month");
 		const label = interaction.options.getString("label");
