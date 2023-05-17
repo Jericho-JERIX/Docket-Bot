@@ -23,6 +23,7 @@ const rest = new REST({
 
 export async function registerCommands(): Promise<SlashCommandObject> {
 	const commands = [
+		Ping,
 		Open,
 		List,
 		Add,

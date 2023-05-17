@@ -6,6 +6,7 @@ import {
 	DocketChannel,
 } from "../../../types/services/ChannelServiceType";
 import { ChannelService } from "../../../services/channel.service";
+import { NotOpenCollectionError } from "../../../templates/messages/errors/NotOpenCollectionError";
 
 export const EditChannel: SlashCommand = {
 	name: "editchannel",
@@ -42,6 +43,11 @@ export const EditChannel: SlashCommand = {
 			interaction.channelId,
 			body
 		);
+
+		if (response.status === 400) {
+			await interaction.reply(NotOpenCollectionError());
+			return;
+		}
 
 		const channelResponse: DocketChannel = response.data;
 

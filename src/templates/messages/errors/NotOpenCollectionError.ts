@@ -6,8 +6,8 @@ import { ErrorMesssageEmbed } from "../../components/ErrorMessageEmbed";
 
 export function NotOpenCollectionError(): SlashCommandInteractionMessage {
 	const embed = ErrorMesssageEmbed(
-		`❌ This ${Text.Channel} has not selected ${Text.Collection} yet`,
-		"To select a Collection, use /open and select a Collection for this Channel"
+		`❌ This ${Text.Channel} has not open ${Text.Collection} yet`,
+		"Use /open to select a Collection to display for this Channel"
 	);
 	return {
 		embeds: [embed],
