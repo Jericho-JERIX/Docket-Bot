@@ -24,33 +24,33 @@ export const Edit: SlashCommand = {
 	description: "Edit a homework",
 	options: [
 		{
-			name: "homework",
-			description: "The homework to edit",
+			name: "todo-item",
+			description: "Select a To-do item to be edit",
 			type: ApplicationCommandOptionType.String,
 			required: true,
 			autocomplete: true,
 		},
 		{
 			name: "date",
-			description: "Date of the to-do item",
+			description: "New due date for this To-do item",
 			type: ApplicationCommandOptionType.Integer,
 			required: false,
 		},
 		{
 			name: "month",
-			description: "Month of the to-do item",
+			description: "New due month for this To-do item",
 			type: ApplicationCommandOptionType.Integer,
 			required: false,
 		},
 		{
 			name: "label",
-			description: "Describe the to-do item",
+			description: "Enter a new label",
 			type: ApplicationCommandOptionType.String,
 			required: false,
 		},
 		{
 			name: "type",
-			description: "Type of the to-do item",
+			description: "Change the type of this To-do item",
 			type: ApplicationCommandOptionType.String,
 			required: false,
 			choices: TypeChoices,
@@ -58,7 +58,7 @@ export const Edit: SlashCommand = {
 	],
 
 	async onCommandExecuted(interaction) {
-		const homeworkId = interaction.options.getString("homework");
+		const homeworkId = interaction.options.getString("todo-item");
 		const date = interaction.options.getInteger("date");
 		const month = interaction.options.getInteger("month");
 		const label = interaction.options.getString("label");

@@ -16,14 +16,14 @@ export const EditChannel: SlashCommand = {
 	options: [
 		{
 			name: "enable-notification",
-			description: "Always update todo-lists every 00:01 AM (GMT+7)",
+			description: "Always update To-do Lists every 00:01 AM (GMT+7)",
 			type: ApplicationCommandOptionType.Boolean,
 			required: false,
 		},
 		{
 			name: "anyone-can-edit",
 			description:
-				"Anyone that can use slash commands in this channel can edit todo-lists",
+				"Anyone that can use slash commands in this channel can edit To-do Lists",
 			type: ApplicationCommandOptionType.Boolean,
 			required: false,
 		},
@@ -32,6 +32,7 @@ export const EditChannel: SlashCommand = {
 		const enableNotification = interaction.options.getBoolean(
 			"enable-notification"
 		);
+		const anyoneCanEdit = interaction.options.getBoolean("anyone-can-edit");
 
 		if (!interaction.guild) {
 			return;
@@ -47,8 +48,6 @@ export const EditChannel: SlashCommand = {
 			await interaction.reply(NoChannelPermissionnError());
 			return;
 		}
-
-		const anyoneCanEdit = interaction.options.getBoolean("anyone-can-edit");
 
 		let body: ChannelServiceEditRequest = {};
 

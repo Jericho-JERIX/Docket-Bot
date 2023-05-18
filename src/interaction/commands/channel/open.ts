@@ -25,8 +25,8 @@ export const Open: SlashCommand = {
 	description: "Open a file for this channel",
 	options: [
 		{
-			name: "file",
-			description: "The file to open",
+			name: "collection",
+			description: "Select a Collection to be open",
 			type: ApplicationCommandOptionType.String,
 			required: true,
 			autocomplete: true,
@@ -34,7 +34,7 @@ export const Open: SlashCommand = {
 	],
 
 	async onCommandExecuted(interaction) {
-		const fileId = interaction.options.getString("file");
+		const fileId = interaction.options.getString("collection");
 
 		if (!interaction.guild) {
 			return;

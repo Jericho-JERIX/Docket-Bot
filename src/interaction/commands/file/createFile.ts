@@ -18,7 +18,7 @@ export const CreateFile: SlashCommand = {
 	options: [
 		{
 			name: "filename",
-			description: "The name of the file",
+			description: "Enter the name for this Collection",
 			type: ApplicationCommandOptionType.String,
 			required: true,
 		},
