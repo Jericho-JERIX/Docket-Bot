@@ -3,6 +3,7 @@ import {
 	ApplicationCommandOptionType,
 	ButtonBuilder,
 	ButtonStyle,
+	PermissionsBitField,
 	StringSelectMenuBuilder,
 } from "discord.js";
 import { SlashCommand } from "../../types/SlashCommand";
@@ -61,6 +62,13 @@ export const Ping: SlashCommand = {
 
 	async onCommandExecuted(interaction) {
 		const message = interaction.options.get("message");
+
+		console.log(
+			interaction.guild?.members.cache
+				.get(interaction.user.id)
+				?.permissionsIn(interaction.channelId)
+				.has(PermissionsBitField.Flags.ManageChannels)
+		);
 
 		let replyMessage = "Hello";
 		if (message) {

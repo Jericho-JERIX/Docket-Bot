@@ -10,6 +10,8 @@ import { HomeworkService } from "../../../services/homework.service";
 import { HomeworkCard } from "../../../templates/components/HomeworkCard";
 import { ClearedHomeworkCard } from "../../../templates/components/ClearedHomeworkCard";
 import { listHomeworksByChannelId } from "../../../modules/listHomeworksByChannelId.module";
+import { getAllHomeworkChoices } from "../../../modules/getAllHomeworkChoices.module";
+import { NoHomeworkPermissionError } from "../../../templates/messages/errors/NoHomeworkPermissionError";
 
 const TypeChoices: SlashCommandOptionChoice[] = [
 	{ name: "📝 Assignment", value: "ASSIGNMENT" },
@@ -22,8 +24,8 @@ export const Delete: SlashCommand = {
 	description: "Delete a homework",
 	options: [
 		{
-			name: "homework",
-			description: "The homework to edit",
+			name: "todo-item",
+			description: "Select a To-do item to be delete",
 			type: ApplicationCommandOptionType.String,
 			required: true,
 			autocomplete: true,
@@ -37,7 +39,7 @@ export const Delete: SlashCommand = {
 	],
 
 	async onCommandExecuted(interaction) {
-		const homeworkId = interaction.options.getString("homework");
+		const homeworkId = interaction.options.getString("todo-item");
 		const confirmation = interaction.options.getString("confirmation");
 
 		if (
@@ -48,11 +50,16 @@ export const Delete: SlashCommand = {
 			return;
 		}
 
-		await HomeworkService.delete(
+		const response = await HomeworkService.delete(
 			interaction.user.id,
 			interaction.channelId,
 			String(homeworkId)
 		);
+
+		if (response.status === 401) {
+			await interaction.reply(NoHomeworkPermissionError());
+			return;
+		}
 
 		const message = await listHomeworksByChannelId(
 			interaction.channelId,
@@ -73,20 +80,10 @@ export const Delete: SlashCommand = {
 
 	async onAutoCompleteInputed(interaction) {
 		const input = interaction.options.getFocused();
-		const response = await HomeworkService.getAll(
+		const choices = await getAllHomeworkChoices(
 			interaction.channelId,
-			HomeworkType.ALL
+			input
 		);
-
-		const homeworkServiceResponse: HomeworkServiceGetAllResponse =
-			response.data;
-		const filteredHomeworks = homeworkServiceResponse.homeworks
-			.filter((homework) => homework.label.includes(input))
-			.map((homework) => ({
-				name: ClearedHomeworkCard(homework),
-				value: String(homework.homework_id),
-			}));
-
-		await interaction.respond(filteredHomeworks);
+		await interaction.respond(choices);
 	},
 };

@@ -14,22 +14,22 @@ export const EditFile: SlashCommand = {
 	description: "Edit a file",
 	options: [
 		{
-			name: "file",
-			description: "The name of the file that you want to edit",
+			name: "collection",
+			description: "Select a Collection to be edit",
 			type: ApplicationCommandOptionType.String,
 			required: true,
 			autocomplete: true,
 		},
 		{
 			name: "rename",
-			description: "Rename the file",
+			description: "Rename this Collection",
 			type: ApplicationCommandOptionType.String,
 			required: true,
 		},
 	],
 
 	async onCommandExecuted(interaction) {
-		const fileId = interaction.options.getString("file");
+		const fileId = interaction.options.getString("collection");
 		const filename = interaction.options.getString("rename");
 
 		if (!filename || !fileId) {

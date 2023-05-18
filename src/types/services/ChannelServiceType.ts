@@ -7,6 +7,17 @@ export type DocketChannel = {
 	enable_notification: boolean;
 };
 
+export type PopulatedDocketChannel = {
+	channel_id: string;
+	file_id: DocketFile;
+	can_edit: boolean;
+	enable_notification: boolean;
+};
+
+export type ChannelServiceGetAllResponse = {
+	channels: PopulatedDocketChannel[];
+};
+
 export type ChannelServiceOpenRespond = {
 	file: DocketFile;
 	channel: DocketChannel;

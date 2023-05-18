@@ -6,6 +6,9 @@ import {
 	DocketChannel,
 } from "../../../types/services/ChannelServiceType";
 import { ChannelService } from "../../../services/channel.service";
+import { NotOpenCollectionError } from "../../../templates/messages/errors/NotOpenCollectionError";
+import { canManageThisChannel } from "../../../modules/canManageThisChannel.module";
+import { NoChannelPermissionnError } from "../../../templates/messages/errors/NoChannelPermissionnError";
 
 export const EditChannel: SlashCommand = {
 	name: "editchannel",
@@ -13,14 +16,14 @@ export const EditChannel: SlashCommand = {
 	options: [
 		{
 			name: "enable-notification",
-			description: "Always update todo-lists every 00:01 AM (GMT+7)",
+			description: "Always update To-do Lists every 00:01 AM (GMT+7)",
 			type: ApplicationCommandOptionType.Boolean,
 			required: false,
 		},
 		{
 			name: "anyone-can-edit",
 			description:
-				"Anyone that can use slash commands in this channel can edit todo-lists",
+				"Anyone that can use slash commands in this channel can edit To-do Lists",
 			type: ApplicationCommandOptionType.Boolean,
 			required: false,
 		},
@@ -30,6 +33,21 @@ export const EditChannel: SlashCommand = {
 			"enable-notification"
 		);
 		const anyoneCanEdit = interaction.options.getBoolean("anyone-can-edit");
+
+		if (!interaction.guild) {
+			return;
+		}
+
+		if (
+			!canManageThisChannel(
+				interaction.guild,
+				interaction.user.id,
+				interaction.channelId
+			)
+		) {
+			await interaction.reply(NoChannelPermissionnError());
+			return;
+		}
 
 		let body: ChannelServiceEditRequest = {};
 
@@ -42,6 +60,11 @@ export const EditChannel: SlashCommand = {
 			interaction.channelId,
 			body
 		);
+
+		if (response.status === 400) {
+			await interaction.reply(NotOpenCollectionError());
+			return;
+		}
 
 		const channelResponse: DocketChannel = response.data;
 

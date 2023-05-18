@@ -2,6 +2,7 @@ import {
 	ApplicationCommandOptionType,
 	ApplicationCommandType,
 	InteractionUpdateOptions,
+	PermissionsBitField,
 } from "discord.js";
 import { SlashCommand } from "../../../types/SlashCommand";
 import { FileService } from "../../../services/file.service";
@@ -16,14 +17,16 @@ import { HomeworkServiceGetAllResponse } from "../../../types/services/HomeworkS
 import { HomeworkList } from "../../../templates/messages/HomeworkList";
 import { listHomeworksByChannelId } from "../../../modules/listHomeworksByChannelId.module";
 import { getAllFilesChoices } from "../../../modules/getAllFilesChoices.module";
+import { canManageThisChannel } from "../../../modules/canManageThisChannel.module";
+import { NoChannelPermissionnError } from "../../../templates/messages/errors/NoChannelPermissionnError";
 
 export const Open: SlashCommand = {
 	name: "open",
 	description: "Open a file for this channel",
 	options: [
 		{
-			name: "file",
-			description: "The file to open",
+			name: "collection",
+			description: "Select a Collection to be open",
 			type: ApplicationCommandOptionType.String,
 			required: true,
 			autocomplete: true,
@@ -31,7 +34,22 @@ export const Open: SlashCommand = {
 	],
 
 	async onCommandExecuted(interaction) {
-		const fileId = interaction.options.getString("file");
+		const fileId = interaction.options.getString("collection");
+
+		if (!interaction.guild) {
+			return;
+		}
+
+		if (
+			!canManageThisChannel(
+				interaction.guild,
+				interaction.user.id,
+				interaction.channelId
+			)
+		) {
+			await interaction.reply(NoChannelPermissionnError());
+			return;
+		}
 
 		await ChannelService.openFile(
 			interaction.user.id,

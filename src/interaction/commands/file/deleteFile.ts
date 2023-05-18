@@ -14,8 +14,8 @@ export const DeleteFile: SlashCommand = {
 	description: "Delete a file",
 	options: [
 		{
-			name: "file",
-			description: "The name of the file that you want to edit",
+			name: "collection",
+			description: "Select a Collection to be delete",
 			type: ApplicationCommandOptionType.String,
 			required: true,
 			autocomplete: true,
@@ -29,7 +29,7 @@ export const DeleteFile: SlashCommand = {
 	],
 
 	async onCommandExecuted(interaction) {
-		const fileId = interaction.options.getString("file");
+		const fileId = interaction.options.getString("collection");
 		const confirmation = interaction.options.getString("confirmation");
 
 		if (

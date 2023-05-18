@@ -10,6 +10,8 @@ import { HomeworkService } from "../../../services/homework.service";
 import { HomeworkCard } from "../../../templates/components/HomeworkCard";
 import { ClearedHomeworkCard } from "../../../templates/components/ClearedHomeworkCard";
 import { listHomeworksByChannelId } from "../../../modules/listHomeworksByChannelId.module";
+import { getAllHomeworkChoices } from "../../../modules/getAllHomeworkChoices.module";
+import { NoHomeworkPermissionError } from "../../../templates/messages/errors/NoHomeworkPermissionError";
 
 const TypeChoices: SlashCommandOptionChoice[] = [
 	{ name: "📝 Assignment", value: "ASSIGNMENT" },
@@ -22,33 +24,33 @@ export const Edit: SlashCommand = {
 	description: "Edit a homework",
 	options: [
 		{
-			name: "homework",
-			description: "The homework to edit",
+			name: "todo-item",
+			description: "Select a To-do item to be edit",
 			type: ApplicationCommandOptionType.String,
 			required: true,
 			autocomplete: true,
 		},
 		{
 			name: "date",
-			description: "Date of the to-do item",
+			description: "New due date for this To-do item",
 			type: ApplicationCommandOptionType.Integer,
 			required: false,
 		},
 		{
 			name: "month",
-			description: "Month of the to-do item",
+			description: "New due month for this To-do item",
 			type: ApplicationCommandOptionType.Integer,
 			required: false,
 		},
 		{
 			name: "label",
-			description: "Describe the to-do item",
+			description: "Enter a new label",
 			type: ApplicationCommandOptionType.String,
 			required: false,
 		},
 		{
 			name: "type",
-			description: "Type of the to-do item",
+			description: "Change the type of this To-do item",
 			type: ApplicationCommandOptionType.String,
 			required: false,
 			choices: TypeChoices,
@@ -56,7 +58,7 @@ export const Edit: SlashCommand = {
 	],
 
 	async onCommandExecuted(interaction) {
-		const homeworkId = interaction.options.getString("homework");
+		const homeworkId = interaction.options.getString("todo-item");
 		const date = interaction.options.getInteger("date");
 		const month = interaction.options.getInteger("month");
 		const label = interaction.options.getString("label");
@@ -73,12 +75,17 @@ export const Edit: SlashCommand = {
 		if (label) body.label = label;
 		if (type) body.type = type as HomeworkType;
 
-		await HomeworkService.update(
+		const response = await HomeworkService.update(
 			interaction.user.id,
 			interaction.channelId,
 			homeworkId,
 			body
 		);
+
+		if (response.status === 401) {
+			await interaction.reply(NoHomeworkPermissionError());
+			return;
+		}
 
 		const message = await listHomeworksByChannelId(
 			interaction.channelId,
@@ -99,20 +106,10 @@ export const Edit: SlashCommand = {
 
 	async onAutoCompleteInputed(interaction) {
 		const input = interaction.options.getFocused();
-		const response = await HomeworkService.getAll(
+		const choices = await getAllHomeworkChoices(
 			interaction.channelId,
-			HomeworkType.ALL
+			input
 		);
-
-		const homeworkServiceResponse: HomeworkServiceGetAllResponse =
-			response.data;
-		const filteredHomeworks = homeworkServiceResponse.homeworks
-			.filter((homework) => homework.label.includes(input))
-			.map((homework) => ({
-				name: ClearedHomeworkCard(homework),
-				value: String(homework.homework_id),
-			}));
-
-		await interaction.respond(filteredHomeworks);
+		await interaction.respond(choices);
 	},
 };

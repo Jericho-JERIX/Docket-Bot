@@ -1,8 +1,9 @@
 import { Client, Events, GatewayIntentBits } from "discord.js";
 import * as dotenv from "dotenv";
-import { registerCommands } from "./src/interaction/register";
+import { registerCommands } from "./interaction/register";
 import { BaseInteraction } from "discord.js";
-import { SlashCommandObject } from "./src/types/SlashCommandObject";
+import { SlashCommandObject } from "./types/SlashCommandObject";
+import { triggerDailyUpdate } from "./modules/dailyUpdate.module";
 
 dotenv.config();
 let commands: SlashCommandObject;
@@ -14,6 +15,7 @@ const client = new Client({
 client.once(Events.ClientReady, async (client: Client) => {
 	console.log(`✅ Ready! Logged in as ${client.user?.tag}`);
 	commands = await registerCommands();
+	triggerDailyUpdate(client);
 });
 
 client.on("interactionCreate", async (interaction: BaseInteraction) => {
