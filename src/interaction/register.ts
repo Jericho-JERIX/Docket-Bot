@@ -45,11 +45,7 @@ export async function registerCommands(): Promise<SlashCommandObject> {
 		await rest.put(Routes.applicationCommands(CLIENT_ID), {
 			body: commands,
 		});
-		console.log(
-			`✅ Successfully registered commands.\n- ${commands
-				.map((command) => command.name)
-				.join("\n- ")}`
-		);
+		console.log(`✅ Successfully registered commands`);
 		return commandsObject;
 	} catch (error) {
 		console.error(error);
