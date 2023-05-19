@@ -37,7 +37,9 @@ export function HomeworkList(
 
 	if (type !== HomeworkType.ALL) {
 		return {
-			content: `\`\`\`📂 File: ${file.filename} (${totalCount}) >> ${
+			content: `\`\`\`📂 Collection: ${
+				file.filename
+			} (${totalCount}) >> ${
 				HomeworkTypeIcon[type]
 			} ${type} (${typeCount})\`\`\`${
 				typeCount == 0 ? EmptyMessage() : homeworkCards.join("\n")
