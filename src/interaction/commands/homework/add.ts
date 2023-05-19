@@ -7,6 +7,7 @@ import { HomeworkType } from "../../../constants/homework";
 import { getYear } from "../../../modules/getYear.module";
 import { listHomeworksByChannelId } from "../../../modules/listHomeworksByChannelId.module";
 import { NoHomeworkPermissionError } from "../../../templates/messages/errors/NoHomeworkPermissionError";
+import { InvalidDateError } from "../../../templates/messages/errors/InvalidDateError";
 
 const TypeChoices: SlashCommandOptionChoice[] = [
 	{ name: "📝 Assignment (Default)", value: "ASSIGNMENT" },
@@ -71,9 +72,13 @@ export const Add: SlashCommand = {
 			body
 		);
 
-		if (response.status === 401) {
-			await interaction.reply(NoHomeworkPermissionError());
-			return;
+		switch (response.status) {
+			case 400:
+				await interaction.reply(InvalidDateError());
+				return;
+			case 401:
+				await interaction.reply(NoHomeworkPermissionError());
+				return;
 		}
 
 		const message = await listHomeworksByChannelId(

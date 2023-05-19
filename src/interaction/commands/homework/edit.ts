@@ -12,6 +12,7 @@ import { ClearedHomeworkCard } from "../../../templates/components/ClearedHomewo
 import { listHomeworksByChannelId } from "../../../modules/listHomeworksByChannelId.module";
 import { getAllHomeworkChoices } from "../../../modules/getAllHomeworkChoices.module";
 import { NoHomeworkPermissionError } from "../../../templates/messages/errors/NoHomeworkPermissionError";
+import { InvalidDateError } from "../../../templates/messages/errors/InvalidDateError";
 
 const TypeChoices: SlashCommandOptionChoice[] = [
 	{ name: "📝 Assignment", value: "ASSIGNMENT" },
@@ -82,9 +83,13 @@ export const Edit: SlashCommand = {
 			body
 		);
 
-		if (response.status === 401) {
-			await interaction.reply(NoHomeworkPermissionError());
-			return;
+		switch (response.status) {
+			case 400:
+				await interaction.reply(InvalidDateError());
+				return;
+			case 401:
+				await interaction.reply(NoHomeworkPermissionError());
+				return;
 		}
 
 		const message = await listHomeworksByChannelId(
