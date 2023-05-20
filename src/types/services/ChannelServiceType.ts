@@ -18,7 +18,7 @@ export type ChannelServiceGetAllResponse = {
 	channels: PopulatedDocketChannel[];
 };
 
-export type ChannelServiceOpenRespond = {
+export type ChannelServiceOpenResponse = {
 	file: DocketFile;
 	channel: DocketChannel;
 };

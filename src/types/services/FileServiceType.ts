@@ -6,7 +6,7 @@ export type DocketFile = {
 	filename: string;
 };
 
-export type FileServiceGetAllRespond = {
+export type FileServiceGetAllResponse = {
 	files: DocketFile[];
 };
 

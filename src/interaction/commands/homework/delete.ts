@@ -2,7 +2,7 @@ import { ApplicationCommandOptionType } from "discord.js";
 import { SlashCommand } from "../../../types/SlashCommand";
 import { SlashCommandOptionChoice } from "../../../types/SlashCommandOption";
 import {
-	HomeworkSeriveUpdateRequest,
+	HomeworkServiceUpdateRequest,
 	HomeworkServiceGetAllResponse,
 } from "../../../types/services/HomeworkServiceType";
 import { HomeworkType } from "../../../constants/homework";
