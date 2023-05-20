@@ -35,6 +35,11 @@ export type HomeworkSeriveUpdateRequest = {
 	year?: number;
 	type?: HomeworkType;
 	label?: string;
+	no_deadline?: boolean;
+};
+
+export type HomeworkServiceCheckRequest = {
+	is_checked: boolean;
 };
 
 export type HomeworkServiceType = {
@@ -57,5 +62,11 @@ export type HomeworkServiceType = {
 		discord_id: string,
 		channel_id: string,
 		homework_id: string
+	) => Promise<any>;
+	check: (
+		discord_id: string,
+		channel_id: string,
+		homework_id: string,
+		body: HomeworkServiceCheckRequest
 	) => Promise<any>;
 };
