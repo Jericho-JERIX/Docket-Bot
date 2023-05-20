@@ -4,6 +4,7 @@ import { registerCommands } from "./interaction/register";
 import { BaseInteraction } from "discord.js";
 import { SlashCommandObject } from "./types/SlashCommandObject";
 import { triggerDailyUpdate } from "./modules/dailyUpdate.module";
+import { updateStatisticPresence } from "./modules/updateStatisticPresence.module";
 
 dotenv.config();
 let commands: SlashCommandObject;
@@ -16,6 +17,7 @@ client.once(Events.ClientReady, async (client: Client) => {
 	console.log(`✅ Ready! Logged in as ${client.user?.tag}`);
 	commands = await registerCommands();
 	triggerDailyUpdate(client);
+	updateStatisticPresence(client);
 });
 
 client.on("interactionCreate", async (interaction: BaseInteraction) => {
