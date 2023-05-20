@@ -40,7 +40,7 @@ export type HomeworkSeriveUpdateRequest = {
 
 export type HomeworkServiceCheckRequest = {
 	is_checked: boolean;
-};
+}
 
 export type HomeworkServiceType = {
 	getAll: (
