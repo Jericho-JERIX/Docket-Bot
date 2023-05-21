@@ -35,5 +35,7 @@ export function populateDocketHomework(
 		day_left: dayLeft,
 		type_icon: type,
 		alert_icon: alert,
+		no_deadline: homework.no_deadline,
+		is_checked: homework.is_checked,
 	};
 }

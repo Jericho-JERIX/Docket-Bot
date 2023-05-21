@@ -113,7 +113,8 @@ export const Edit: SlashCommand = {
 		const input = interaction.options.getFocused();
 		const choices = await getAllHomeworkChoices(
 			interaction.channelId,
-			input
+			(homework) =>
+				homework.day_name.toLowerCase().includes(input.toLowerCase())
 		);
 		await interaction.respond(choices);
 	},

@@ -12,24 +12,29 @@ export function HomeworkCard(homework: DocketHomework): string {
 			hw.day_name.toUpperCase() as keyof typeof ShorthenDayName
 		];
 
-	if (hw.day_left == 0) {
-		return `[\`${shorthenDayName}\`.\`${fixSpace(
+	let markdownText: string;
+
+	if (!hw.is_checked)
+		markdownText = `[\`${shorthenDayName}\`.\`${fixSpace(
 			hw.date,
 			2,
 			"0"
-		)}/${fixSpace(hw.month, 2, "0")}\`] ${
-			hw.alert_icon
-		} **(\`เดี๋ยวนี้!\`)** ${hw.type_icon} \`${hw.label}\``;
-	} else {
-		return `[\`${shorthenDayName}\`.\`${fixSpace(
+		)}/${fixSpace(hw.month, 2, "0")}\`] ${hw.alert_icon} ${
+			hw.day_left == 0
+				? "**(`เดี๋ยวนี้!`)**"
+				: `**(\`${fixSpace(hw.day_left, 3)}\` วัน)**`
+		} ${hw.type_icon} \`${hw.label}\``;
+	else {
+		markdownText = `~~\`[${shorthenDayName}.${fixSpace(
 			hw.date,
 			2,
 			"0"
-		)}/${fixSpace(hw.month, 2, "0")}\`] ${hw.alert_icon} **(\`${fixSpace(
-			hw.day_left,
-			3
-		)}\` วัน)** ${hw.type_icon} \`${
-			hw.label
-		}\``;
+		)}/${fixSpace(hw.month, 2, "0")}] ${hw.alert_icon} ${
+			hw.day_left == 0
+				? "(`เดี๋ยวนี้!`)"
+				: `(${fixSpace(hw.day_left, 3)} วัน)`
+		} ${hw.type_icon} ${hw.label}\`~~`;
 	}
+
+	return markdownText;
 }

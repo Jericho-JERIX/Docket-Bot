@@ -12,6 +12,8 @@ import { EditChannel } from "./commands/channel/editChannel";
 import { CreateFile } from "./commands/file/createFile";
 import { EditFile } from "./commands/file/editFile";
 import { DeleteFile } from "./commands/file/deleteFile";
+import { Check } from "./commands/homework/check";
+import { Uncheck } from "./commands/homework/uncheck";
 
 dotenv.config();
 
@@ -33,6 +35,8 @@ export async function registerCommands(): Promise<SlashCommandObject> {
 		CreateFile,
 		EditFile,
 		DeleteFile,
+		Check,
+		Uncheck,
 	];
 
 	let commandsObject: SlashCommandObject = {};

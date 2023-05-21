@@ -12,6 +12,8 @@ export type DocketHomework = {
 	day_name: string;
 	type: HomeworkType;
 	label: string;
+	no_deadline: boolean;
+	is_checked: boolean;
 };
 
 export type HomeworkServiceGetAllResponse = {

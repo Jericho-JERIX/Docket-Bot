@@ -13,6 +13,7 @@ import { HomeworkCard } from "../components/HomeworkCard";
 import { TypeButton } from "../components/TypeButton";
 import { Title } from "../components/Title";
 import { SlashCommandInteractionMessage } from "../../types/SlashCommandInteractionMessage";
+import { NoDeadlineHomeworkCard } from "../components/NoDeadlineHomeworkCard";
 
 export function HomeworkList(
 	file: DocketFile,
@@ -32,7 +33,9 @@ export function HomeworkList(
 	}
 
 	const homeworkCards = filteredHomework.map((homework) =>
-		HomeworkCard(homework)
+		homework.no_deadline
+			? NoDeadlineHomeworkCard(homework)
+			: HomeworkCard(homework)
 	);
 
 	if (type !== HomeworkType.ALL) {
