@@ -2,7 +2,7 @@ import { ApplicationCommandOptionType } from "discord.js";
 import { SlashCommand } from "../../../types/SlashCommand";
 import { SlashCommandOptionChoice } from "../../../types/SlashCommandOption";
 import {
-	HomeworkSeriveUpdateRequest,
+	HomeworkServiceUpdateRequest,
 	HomeworkServiceGetAllResponse,
 } from "../../../types/services/HomeworkServiceType";
 import { HomeworkType } from "../../../constants/homework";
@@ -69,12 +69,12 @@ export const Edit: SlashCommand = {
 			return;
 		}
 
-		let body: HomeworkSeriveUpdateRequest = {};
+		let body: HomeworkServiceUpdateRequest = {};
 
 		if (date) body.date = date;
 		if (month) body.month = month;
 		if (label) body.label = label;
-		if (type) body.type = type as HomeworkType;
+		if (type) body.type = type as HomeworkType;	
 
 		const response = await HomeworkService.update(
 			interaction.user.id,
@@ -113,7 +113,8 @@ export const Edit: SlashCommand = {
 		const input = interaction.options.getFocused();
 		const choices = await getAllHomeworkChoices(
 			interaction.channelId,
-			input
+			(homework) =>
+				homework.day_name.toLowerCase().includes(input.toLowerCase())
 		);
 		await interaction.respond(choices);
 	},

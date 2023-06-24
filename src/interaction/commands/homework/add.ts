@@ -2,7 +2,7 @@ import { ApplicationCommandOptionType } from "discord.js";
 import { SlashCommand } from "../../../types/SlashCommand";
 import { SlashCommandOptionChoice } from "../../../types/SlashCommandOption";
 import { HomeworkService } from "../../../services/homework.service";
-import { HomeworkSeriveCreateRequest } from "../../../types/services/HomeworkServiceType";
+import { HomeworkServiceCreateRequest } from "../../../types/services/HomeworkServiceType";
 import { HomeworkType } from "../../../constants/homework";
 import { getYear } from "../../../modules/getYear.module";
 import { listHomeworksByChannelId } from "../../../modules/listHomeworksByChannelId.module";
@@ -58,7 +58,7 @@ export const Add: SlashCommand = {
 
 		const homeworkType = type ? type : "ASSIGNMENT";
 
-		const body: HomeworkSeriveCreateRequest = {
+		const body: HomeworkServiceCreateRequest = {
 			date: date,
 			month: month,
 			year: getYear(date, month),

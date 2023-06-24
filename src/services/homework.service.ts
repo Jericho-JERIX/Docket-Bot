@@ -56,4 +56,17 @@ export const HomeworkService: HomeworkServiceType = {
 				return err.response;
 			});
 	},
+	check: async (discord_id, channel_id, homework_id, body) => {
+		return axios
+			.put(
+				`${BACKEND_URL}/account/${discord_id}/channel/${channel_id}/homework/${homework_id}/check`,
+				body
+			)
+			.then((res) => {
+				return res;
+			})
+			.catch((err) => {
+				return err.response;
+			});
+	},
 };

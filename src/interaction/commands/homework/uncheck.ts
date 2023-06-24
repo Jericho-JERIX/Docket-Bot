@@ -4,6 +4,7 @@ import { SlashCommandOptionChoice } from "../../../types/SlashCommandOption";
 import {
 	HomeworkServiceUpdateRequest,
 	HomeworkServiceGetAllResponse,
+	HomeworkServiceCheckRequest,
 } from "../../../types/services/HomeworkServiceType";
 import { HomeworkType } from "../../../constants/homework";
 import { HomeworkService } from "../../../services/homework.service";
@@ -12,6 +13,7 @@ import { ClearedHomeworkCard } from "../../../templates/components/ClearedHomewo
 import { listHomeworksByChannelId } from "../../../modules/listHomeworksByChannelId.module";
 import { getAllHomeworkChoices } from "../../../modules/getAllHomeworkChoices.module";
 import { NoHomeworkPermissionError } from "../../../templates/messages/errors/NoHomeworkPermissionError";
+import { InvalidDateError } from "../../../templates/messages/errors/InvalidDateError";
 
 const TypeChoices: SlashCommandOptionChoice[] = [
 	{ name: "📝 Assignment", value: "ASSIGNMENT" },
@@ -19,46 +21,44 @@ const TypeChoices: SlashCommandOptionChoice[] = [
 	{ name: "🔥 Exam", value: "EXAM" },
 ];
 
-export const Delete: SlashCommand = {
-	name: "delete",
-	description: "Delete a homework",
+export const Uncheck: SlashCommand = {
+	name: "uncheck",
+	description: "Unmark a Todo-Item that already completed",
 	options: [
 		{
 			name: "todo-item",
-			description: "Select a To-do item to be delete",
+			description: "Select a To-do item to be uncheck",
 			type: ApplicationCommandOptionType.String,
 			required: true,
 			autocomplete: true,
-		},
-		{
-			name: "confirmation",
-			description: "Confirm your deletion by typing 'delete'",
-			type: ApplicationCommandOptionType.String,
-			required: true,
 		},
 	],
 
 	async onCommandExecuted(interaction) {
 		const homeworkId = interaction.options.getString("todo-item");
-		const confirmation = interaction.options.getString("confirmation");
 
-		if (
-			!confirmation ||
-			!homeworkId ||
-			confirmation.toLowerCase() !== "delete"
-		) {
+		if (!homeworkId) {
 			return;
 		}
 
-		const response = await HomeworkService.delete(
+		let body: HomeworkServiceCheckRequest = {
+			is_checked: false,
+		};
+
+		const response = await HomeworkService.check(
 			interaction.user.id,
 			interaction.channelId,
-			String(homeworkId)
+			String(homeworkId),
+			body
 		);
 
-		if (response.status === 401) {
-			await interaction.reply(NoHomeworkPermissionError());
-			return;
+		switch (response.status) {
+			case 400:
+				await interaction.reply(InvalidDateError());
+				return;
+			case 401:
+				await interaction.reply(NoHomeworkPermissionError());
+				return;
 		}
 
 		const message = await listHomeworksByChannelId(
@@ -83,7 +83,8 @@ export const Delete: SlashCommand = {
 		const choices = await getAllHomeworkChoices(
 			interaction.channelId,
 			(homework) =>
-				homework.day_name.toLowerCase().includes(input.toLowerCase())
+				homework.day_name.toLowerCase().includes(input.toLowerCase()) &&
+				homework.is_checked
 		);
 		await interaction.respond(choices);
 	},

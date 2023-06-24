@@ -17,4 +17,6 @@ export type PopulatedDocketHomework = {
 	day_left: number;
 	type_icon: HomeworkTypeIcon;
 	alert_icon: HomeworkAlertIcon;
+	no_deadline: boolean;
+	is_checked: boolean;
 };
