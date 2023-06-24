@@ -10,8 +10,8 @@ import { FileSetting } from "../../../templates/messages/FileSetting";
 import { getAllFilesChoices } from "../../../modules/getAllFilesChoices.module";
 
 export const EditFile: SlashCommand = {
-	name: "editfile",
-	description: "Edit a file",
+	name: "editcollection",
+	description: "Edit a collection",
 	options: [
 		{
 			name: "collection",

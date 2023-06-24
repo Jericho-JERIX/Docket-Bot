@@ -13,11 +13,11 @@ import { canManageThisChannel } from "../../../modules/canManageThisChannel.modu
 import { NoChannelPermissionnError } from "../../../templates/messages/errors/NoChannelPermissionnError";
 
 export const CreateFile: SlashCommand = {
-	name: "createfile",
-	description: "Create a file",
+	name: "createcollection",
+	description: "Create a collection",
 	options: [
 		{
-			name: "filename",
+			name: "name",
 			description: "Enter the name for this Collection",
 			type: ApplicationCommandOptionType.String,
 			required: true,
@@ -25,7 +25,7 @@ export const CreateFile: SlashCommand = {
 	],
 
 	async onCommandExecuted(interaction) {
-		const filename = interaction.options.getString("filename");
+		const filename = interaction.options.getString("name");
 
 		if (filename === null) {
 			return;

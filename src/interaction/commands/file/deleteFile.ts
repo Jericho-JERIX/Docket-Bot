@@ -10,8 +10,8 @@ import { FileSetting } from "../../../templates/messages/FileSetting";
 import { getAllFilesChoices } from "../../../modules/getAllFilesChoices.module";
 
 export const DeleteFile: SlashCommand = {
-	name: "deletefile",
-	description: "Delete a file",
+	name: "deletecollection",
+	description: "Delete a collection",
 	options: [
 		{
 			name: "collection",
