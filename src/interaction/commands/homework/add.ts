@@ -52,19 +52,27 @@ export const Add: SlashCommand = {
 		const label = interaction.options.getString("label");
 		const type = interaction.options.getString("type");
 
-		if (!date || !month || !label) {
+		if (!label) {
 			return;
 		}
 
 		const homeworkType = type ? type : "ASSIGNMENT";
+		let body: HomeworkServiceCreateRequest;
 
-		const body: HomeworkServiceCreateRequest = {
-			date: date,
-			month: month,
-			year: getYear(date, month),
-			label: label,
-			type: homeworkType as HomeworkType,
-		};
+		if (!date || !month) {
+			body = {
+				label: label,
+				type: homeworkType as HomeworkType,
+			};
+		} else {
+			body = {
+				date: date,
+				month: month,
+				year: getYear(date, month),
+				label: label,
+				type: homeworkType as HomeworkType,
+			};
+		}
 
 		const response = await HomeworkService.create(
 			interaction.user.id,

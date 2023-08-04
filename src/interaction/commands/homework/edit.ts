@@ -74,7 +74,11 @@ export const Edit: SlashCommand = {
 		if (date) body.date = date;
 		if (month) body.month = month;
 		if (label) body.label = label;
-		if (type) body.type = type as HomeworkType;	
+		if (type) body.type = type as HomeworkType;
+
+		if (!date || !month) {
+			body.no_deadline = true;
+		}
 
 		const response = await HomeworkService.update(
 			interaction.user.id,

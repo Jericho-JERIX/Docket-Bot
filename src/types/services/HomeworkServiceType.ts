@@ -24,9 +24,9 @@ export type HomeworkServiceGetAllResponse = {
 };
 
 export type HomeworkServiceCreateRequest = {
-	date: number;
-	month: number;
-	year: number;
+	date?: number;
+	month?: number;
+	year?: number;
 	type: HomeworkType;
 	label: string;
 };
