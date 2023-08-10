@@ -63,7 +63,8 @@ export const Check: SlashCommand = {
 
 		const message = await listHomeworksByChannelId(
 			interaction.channelId,
-			HomeworkType.ALL
+			HomeworkType.ALL,
+			""
 		);
 
 		await interaction.reply(message);
@@ -72,7 +73,8 @@ export const Check: SlashCommand = {
 	async onButtonPressed(interaction) {
 		const message = await listHomeworksByChannelId(
 			interaction.channelId,
-			interaction.customId as HomeworkType
+			interaction.customId as HomeworkType,
+			""
 		);
 
 		await interaction.update(message);
@@ -82,9 +84,10 @@ export const Check: SlashCommand = {
 		const input = interaction.options.getFocused();
 		const choices = await getAllHomeworkChoices(
 			interaction.channelId,
-			(homework) =>
-				homework.day_name.toLowerCase().includes(input.toLowerCase()) &&
-				!homework.is_checked
+			input.toLowerCase()
+			// (homework) =>
+			// 	homework.day_name.toLowerCase().includes(input.toLowerCase()) &&
+			// 	!homework.is_checked
 		);
 		await interaction.respond(choices);
 	},

@@ -57,7 +57,8 @@ export const Open: SlashCommand = {
 
 		const message = await listHomeworksByChannelId(
 			interaction.channelId,
-			HomeworkType.ALL
+			HomeworkType.ALL,
+			""
 		);
 		await interaction.reply(message);
 	},
@@ -65,7 +66,8 @@ export const Open: SlashCommand = {
 	async onButtonPressed(interaction) {
 		const message = await listHomeworksByChannelId(
 			interaction.channelId,
-			interaction.customId as HomeworkType
+			interaction.customId as HomeworkType,
+			""
 		);
 		await interaction.update(message);
 	},

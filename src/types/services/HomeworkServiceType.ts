@@ -47,7 +47,8 @@ export type HomeworkServiceCheckRequest = {
 export type HomeworkServiceType = {
 	getAll: (
 		channel_id: string,
-		type: HomeworkType | undefined
+		type: HomeworkType | undefined,
+		keyword: string | undefined
 	) => Promise<any>;
 	create: (
 		discord_id: string,

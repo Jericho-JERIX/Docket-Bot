@@ -91,7 +91,8 @@ export const Add: SlashCommand = {
 
 		const message = await listHomeworksByChannelId(
 			interaction.channelId,
-			HomeworkType.ALL
+			HomeworkType.ALL,
+			""
 		);
 		await interaction.reply(message);
 	},
@@ -99,7 +100,8 @@ export const Add: SlashCommand = {
 	async onButtonPressed(interaction) {
 		const message = await listHomeworksByChannelId(
 			interaction.channelId,
-			interaction.customId as HomeworkType
+			interaction.customId as HomeworkType,
+			""
 		);
 		await interaction.update(message);
 	},

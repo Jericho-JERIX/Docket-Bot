@@ -17,12 +17,14 @@ export const HomeworkService: HomeworkServiceType = {
 				return err.response;
 			});
 	},
-	getAll: async (channel_id, type) => {
+	getAll: async (channel_id, type, keyword) => {
 		if (!type) type = HomeworkType.ALL;
+		if (!keyword) keyword = "";
 		return axios
 			.get(
 				`${BACKEND_URL}/channel/${channel_id}` +
-					`?type=${type.toUpperCase()}`
+					`?type=${type.toUpperCase()}` +
+					`&keyword=${keyword}`
 			)
 			.then((res) => {
 				return res;
