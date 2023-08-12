@@ -76,7 +76,7 @@ export const Edit: SlashCommand = {
 		if (label) body.label = label;
 		if (type) body.type = type as HomeworkType;
 
-		if (!date || !month) {
+		if (date == 0 || month == 0) {
 			body.no_deadline = true;
 		}
 
