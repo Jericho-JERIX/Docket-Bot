@@ -9,9 +9,14 @@ import {
 
 export async function getAllHomeworkChoices(
 	channelId: string,
-	filterFunction: (homework: DocketHomework) => boolean
+	// filterFunction: (homework: DocketHomework) => boolean
+	keyword: string
 ): Promise<SlashCommandOptionChoice[]> {
-	const response = await HomeworkService.getAll(channelId, HomeworkType.ALL);
+	const response = await HomeworkService.getAll(
+		channelId,
+		HomeworkType.ALL,
+		keyword
+	);
 
 	if (response.status === 400) {
 		return [];
@@ -20,7 +25,7 @@ export async function getAllHomeworkChoices(
 	const homeworkServiceResponse: HomeworkServiceGetAllResponse =
 		response.data;
 	const choices = homeworkServiceResponse.homeworks
-		.filter((homework: DocketHomework) => filterFunction(homework))
+		// .filter((homework: DocketHomework) => filterFunction(homework))
 		.map((homework) => ({
 			name: ClearedHomeworkCard(homework),
 			value: String(homework.homework_id),

@@ -16,7 +16,8 @@ export async function broadcastTodoListToAllChannels(client: Client) {
 
 		const message = await listHomeworksByChannelId(
 			channel.channel_id,
-			HomeworkType.ALL
+			HomeworkType.ALL,
+			""
 		);
 
 		if (targetChannel.type === ChannelType.GuildText) {

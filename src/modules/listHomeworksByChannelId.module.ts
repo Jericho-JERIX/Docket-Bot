@@ -10,9 +10,10 @@ import { NotOpenCollectionError } from "./../templates/messages/errors/NotOpenCo
 
 export async function listHomeworksByChannelId(
 	channelId: string,
-	type: HomeworkType
+	type: HomeworkType,
+	keyword: string
 ): Promise<SlashCommandInteractionMessage> {
-	const response = await HomeworkService.getAll(channelId, type);
+	const response = await HomeworkService.getAll(channelId, type, keyword);
 
 	if (response.status === 400) {
 		return NotOpenCollectionError();
