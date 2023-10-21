@@ -46,14 +46,14 @@ export function HomeworkList(
 				HomeworkTypeIcon[type]
 			} ${type} (${typeCount})\`\`\`${
 				typeCount == 0 ? EmptyMessage() : homeworkCards.join("\n")
-			}\n<@311530719434244102>`,
+			}`,
 			components: [TypeButton()],
 		};
 	} else {
 		return {
 			content: `${FileHeader(file.filename, totalCount)}${
 				totalCount == 0 ? EmptyMessage() : homeworkCards.join("\n")
-			}\n<@311530719434244102>`,
+			}`,
 			components: [TypeButton()],
 		};
 	}
