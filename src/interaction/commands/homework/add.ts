@@ -2,7 +2,7 @@ import { ApplicationCommandOptionType } from "discord.js";
 import { SlashCommand } from "../../../types/SlashCommand";
 import { SlashCommandOptionChoice } from "../../../types/SlashCommandOption";
 import { HomeworkService } from "../../../services/homework.service";
-import { HomeworkSeriveCreateRequest } from "../../../types/services/HomeworkServiceType";
+import { HomeworkServiceCreateRequest } from "../../../types/services/HomeworkServiceType";
 import { HomeworkType } from "../../../constants/homework";
 import { getYear } from "../../../modules/getYear.module";
 import { listHomeworksByChannelId } from "../../../modules/listHomeworksByChannelId.module";
@@ -52,19 +52,27 @@ export const Add: SlashCommand = {
 		const label = interaction.options.getString("label");
 		const type = interaction.options.getString("type");
 
-		if (!date || !month || !label) {
+		if (!label) {
 			return;
 		}
 
 		const homeworkType = type ? type : "ASSIGNMENT";
+		let body: HomeworkServiceCreateRequest;
 
-		const body: HomeworkSeriveCreateRequest = {
-			date: date,
-			month: month,
-			year: getYear(date, month),
-			label: label,
-			type: homeworkType as HomeworkType,
-		};
+		if (!date || !month) {
+			body = {
+				label: label,
+				type: homeworkType as HomeworkType,
+			};
+		} else {
+			body = {
+				date: date,
+				month: month,
+				year: getYear(date, month),
+				label: label,
+				type: homeworkType as HomeworkType,
+			};
+		}
 
 		const response = await HomeworkService.create(
 			interaction.user.id,
@@ -83,7 +91,8 @@ export const Add: SlashCommand = {
 
 		const message = await listHomeworksByChannelId(
 			interaction.channelId,
-			HomeworkType.ALL
+			HomeworkType.ALL,
+			""
 		);
 		await interaction.reply(message);
 	},
@@ -91,7 +100,8 @@ export const Add: SlashCommand = {
 	async onButtonPressed(interaction) {
 		const message = await listHomeworksByChannelId(
 			interaction.channelId,
-			interaction.customId as HomeworkType
+			interaction.customId as HomeworkType,
+			""
 		);
 		await interaction.update(message);
 	},

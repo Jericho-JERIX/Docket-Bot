@@ -4,6 +4,7 @@ import { SlashCommandOptionChoice } from "../../../types/SlashCommandOption";
 import {
 	HomeworkServiceUpdateRequest,
 	HomeworkServiceGetAllResponse,
+	HomeworkServiceCheckRequest,
 } from "../../../types/services/HomeworkServiceType";
 import { HomeworkType } from "../../../constants/homework";
 import { HomeworkService } from "../../../services/homework.service";
@@ -20,70 +21,34 @@ const TypeChoices: SlashCommandOptionChoice[] = [
 	{ name: "🔥 Exam", value: "EXAM" },
 ];
 
-export const Edit: SlashCommand = {
-	name: "edit",
-	description: "Edit a homework",
+export const Check: SlashCommand = {
+	name: "check",
+	description: "Mark a Todo-Item to be completed",
 	options: [
 		{
 			name: "todo-item",
-			description: "Select a To-do item to be edit",
+			description: "Select a To-do item to be check",
 			type: ApplicationCommandOptionType.String,
 			required: true,
 			autocomplete: true,
-		},
-		{
-			name: "date",
-			description: "New due date for this To-do item",
-			type: ApplicationCommandOptionType.Integer,
-			required: false,
-		},
-		{
-			name: "month",
-			description: "New due month for this To-do item",
-			type: ApplicationCommandOptionType.Integer,
-			required: false,
-		},
-		{
-			name: "label",
-			description: "Enter a new label",
-			type: ApplicationCommandOptionType.String,
-			required: false,
-		},
-		{
-			name: "type",
-			description: "Change the type of this To-do item",
-			type: ApplicationCommandOptionType.String,
-			required: false,
-			choices: TypeChoices,
 		},
 	],
 
 	async onCommandExecuted(interaction) {
 		const homeworkId = interaction.options.getString("todo-item");
-		const date = interaction.options.getInteger("date");
-		const month = interaction.options.getInteger("month");
-		const label = interaction.options.getString("label");
-		const type = interaction.options.getString("type");
 
 		if (!homeworkId) {
 			return;
 		}
 
-		let body: HomeworkServiceUpdateRequest = {};
+		let body: HomeworkServiceCheckRequest = {
+			is_checked: true,
+		};
 
-		if (date) body.date = date;
-		if (month) body.month = month;
-		if (label) body.label = label;
-		if (type) body.type = type as HomeworkType;
-
-		if (date == 0 || month == 0) {
-			body.no_deadline = true;
-		}
-
-		const response = await HomeworkService.update(
+		const response = await HomeworkService.check(
 			interaction.user.id,
 			interaction.channelId,
-			homeworkId,
+			String(homeworkId),
 			body
 		);
 
@@ -121,7 +86,8 @@ export const Edit: SlashCommand = {
 			interaction.channelId,
 			input.toLowerCase()
 			// (homework) =>
-			// 	homework.day_name.toLowerCase().includes(input.toLowerCase())
+			// 	homework.day_name.toLowerCase().includes(input.toLowerCase()) &&
+			// 	!homework.is_checked
 		);
 		await interaction.respond(choices);
 	},

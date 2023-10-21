@@ -6,11 +6,9 @@ import {
 } from "discord.js";
 import { SlashCommand } from "../../../types/SlashCommand";
 import { FileService } from "../../../services/file.service";
-import { FileServiceGetAllRespond } from "../../../types/services/FileServiceType";
 import { SlashCommandOptionChoice } from "../../../types/SlashCommandOption";
 import { kebabToCapital } from "../../../modules/kebabToCapital.module";
 import { ChannelService } from "../../../services/channel.service";
-import { ChannelServiceOpenRespond } from "../../../types/services/ChannelServiceType";
 import { HomeworkService } from "../../../services/homework.service";
 import { HomeworkType } from "../../../constants/homework";
 import { HomeworkServiceGetAllResponse } from "../../../types/services/HomeworkServiceType";
@@ -59,7 +57,8 @@ export const Open: SlashCommand = {
 
 		const message = await listHomeworksByChannelId(
 			interaction.channelId,
-			HomeworkType.ALL
+			HomeworkType.ALL,
+			""
 		);
 		await interaction.reply(message);
 	},
@@ -67,7 +66,8 @@ export const Open: SlashCommand = {
 	async onButtonPressed(interaction) {
 		const message = await listHomeworksByChannelId(
 			interaction.channelId,
-			interaction.customId as HomeworkType
+			interaction.customId as HomeworkType,
+			""
 		);
 		await interaction.update(message);
 	},

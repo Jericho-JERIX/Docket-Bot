@@ -17,12 +17,14 @@ export const HomeworkService: HomeworkServiceType = {
 				return err.response;
 			});
 	},
-	getAll: async (channel_id, type) => {
+	getAll: async (channel_id, type, keyword) => {
 		if (!type) type = HomeworkType.ALL;
+		if (!keyword) keyword = "";
 		return axios
 			.get(
 				`${BACKEND_URL}/channel/${channel_id}` +
-					`?type=${type.toUpperCase()}`
+					`?type=${type.toUpperCase()}` +
+					`&keyword=${keyword}`
 			)
 			.then((res) => {
 				return res;
@@ -48,6 +50,19 @@ export const HomeworkService: HomeworkServiceType = {
 		return axios
 			.delete(
 				`${BACKEND_URL}/account/${discord_id}/channel/${channel_id}/homework/${homework_id}`
+			)
+			.then((res) => {
+				return res;
+			})
+			.catch((err) => {
+				return err.response;
+			});
+	},
+	check: async (discord_id, channel_id, homework_id, body) => {
+		return axios
+			.put(
+				`${BACKEND_URL}/account/${discord_id}/channel/${channel_id}/homework/${homework_id}/check`,
+				body
 			)
 			.then((res) => {
 				return res;

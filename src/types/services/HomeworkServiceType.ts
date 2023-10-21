@@ -12,6 +12,8 @@ export type DocketHomework = {
 	day_name: string;
 	type: HomeworkType;
 	label: string;
+	no_deadline: boolean;
+	is_checked: boolean;
 };
 
 export type HomeworkServiceGetAllResponse = {
@@ -21,41 +23,53 @@ export type HomeworkServiceGetAllResponse = {
 	homeworks: DocketHomework[];
 };
 
-export type HomeworkSeriveCreateRequest = {
-	date: number;
-	month: number;
-	year: number;
+export type HomeworkServiceCreateRequest = {
+	date?: number;
+	month?: number;
+	year?: number;
 	type: HomeworkType;
 	label: string;
 };
 
-export type HomeworkSeriveUpdateRequest = {
+export type HomeworkServiceUpdateRequest = {
 	date?: number;
 	month?: number;
 	year?: number;
 	type?: HomeworkType;
 	label?: string;
+	no_deadline?: boolean;
+};
+
+export type HomeworkServiceCheckRequest = {
+	is_checked: boolean;
 };
 
 export type HomeworkServiceType = {
 	getAll: (
 		channel_id: string,
-		type: HomeworkType | undefined
+		type: HomeworkType | undefined,
+		keyword: string | undefined
 	) => Promise<any>;
 	create: (
 		discord_id: string,
 		channel_id: string,
-		body: HomeworkSeriveCreateRequest
+		body: HomeworkServiceCreateRequest
 	) => Promise<any>;
 	update: (
 		discord_id: string,
 		channel_id: string,
 		homework_id: string,
-		body: HomeworkSeriveUpdateRequest
+		body: HomeworkServiceUpdateRequest
 	) => Promise<any>;
 	delete: (
 		discord_id: string,
 		channel_id: string,
 		homework_id: string
+	) => Promise<any>;
+	check: (
+		discord_id: string,
+		channel_id: string,
+		homework_id: string,
+		body: HomeworkServiceCheckRequest
 	) => Promise<any>;
 };

@@ -12,6 +12,9 @@ import { EditChannel } from "./commands/channel/editChannel";
 import { CreateFile } from "./commands/file/createFile";
 import { EditFile } from "./commands/file/editFile";
 import { DeleteFile } from "./commands/file/deleteFile";
+import { Check } from "./commands/homework/check";
+import { Uncheck } from "./commands/homework/uncheck";
+import { Test } from "./commands/test";
 
 dotenv.config();
 
@@ -24,6 +27,7 @@ const rest = new REST({
 export async function registerCommands(): Promise<SlashCommandObject> {
 	const commands = [
 		Ping,
+		Test,
 		Open,
 		List,
 		Add,
@@ -33,6 +37,8 @@ export async function registerCommands(): Promise<SlashCommandObject> {
 		CreateFile,
 		EditFile,
 		DeleteFile,
+		Check,
+		Uncheck,
 	];
 
 	let commandsObject: SlashCommandObject = {};
