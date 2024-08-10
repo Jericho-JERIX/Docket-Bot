@@ -60,7 +60,7 @@ export const CreateFile: SlashCommand = {
 			`✅ ${FilenameText(
 				fileResponse.file.filename
 			)} has been created and opened in <#${interaction.channelId}>`,
-			"Create your first Todo by using /create command"
+			"Create your first Todo by using /add command"
 		);
 		await interaction.reply(message);
 	},
