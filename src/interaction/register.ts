@@ -1,6 +1,4 @@
 import { REST, Routes } from "discord.js";
-import { Ping } from "./commands/ping";
-import { SlashCommand } from "../types/SlashCommand";
 import * as dotenv from "dotenv";
 import { SlashCommandObject } from "../types/SlashCommandObject";
 import { Open } from "./commands/channel/open";
@@ -14,7 +12,6 @@ import { EditFile } from "./commands/file/editFile";
 import { DeleteFile } from "./commands/file/deleteFile";
 import { Check } from "./commands/homework/check";
 import { Uncheck } from "./commands/homework/uncheck";
-import { Test } from "./commands/test";
 
 dotenv.config();
 
@@ -26,8 +23,6 @@ const rest = new REST({
 
 export async function registerCommands(): Promise<SlashCommandObject> {
 	const commands = [
-		Ping,
-		Test,
 		Open,
 		List,
 		Add,
