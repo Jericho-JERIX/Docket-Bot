@@ -1,0 +1,45 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model HomeworkFile {
+    file_id             Int     @id @default(autoincrement())
+    owner_id            String
+    filename            String
+    homeworks           Homework[]
+    homework_channels   HomeworkChannel[]
+
+    @@unique([owner_id, filename])
+}
+
+model Homework {
+    homework_id     Int @id @default(autoincrement())
+    file_id         Int
+    homework_file   HomeworkFile @relation(fields: [file_id], references: [file_id])
+    is_active       Boolean @default(true)
+    date            Int
+    month           Int
+    year            Int
+    timestamp       Int
+    day_name        String
+    type            String
+    label           String 
+    no_deadline     Boolean @default(false)
+    is_checked      Boolean @default(false)
+}
+
+model HomeworkChannel {
+    channel_id              String @id
+    file_id                 Int
+    homework_file           HomeworkFile @relation(fields: [file_id], references: [file_id])
+    can_edit                Boolean @default(false)
+    enable_notification     Boolean @default(false)
+}

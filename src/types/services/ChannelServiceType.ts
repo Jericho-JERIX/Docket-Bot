@@ -33,7 +33,7 @@ export type ChannelServiceType = {
 	openFile: (
 		discord_id: string,
 		channel_id: string,
-		file_id: string
+		file_id: number
 	) => Promise<any>;
 	edit: (
 		discord_id: string,
