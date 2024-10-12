@@ -39,12 +39,12 @@ export const EditFile: SlashCommand = {
 		const body: FileServiceUpdateRequest = {
 			filename: filename,
 		};
-		const reponse = await FileService.update(
+		const response = await FileService.update(
 			interaction.user.id,
-			fileId,
+			parseInt(fileId),
 			body
 		);
-		const fileResponse: FileServiceUpdateResponse = reponse.data;
+		const fileResponse: FileServiceUpdateResponse = response;
 
 		const message = FileSetting(
 			`✅ File has been renamed to ${FilenameText(fileResponse.filename)}`

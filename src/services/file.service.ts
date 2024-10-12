@@ -1,11 +1,11 @@
 import axios from "axios";
 import { BACKEND_URL } from "../constants/service";
-import { FileServiceType } from "../types/services/FileServiceType";
+import { FileServiceCreateRequest, FileServiceType, FileServiceUpdateRequest } from "../types/services/FileServiceType";
 import { prisma } from "../database/prisma";
 import { formatFilename } from "../util/FormatFilename";
 
-export const FileService: FileServiceType = {
-	create: async (discord_id, channel_id, body) => {
+export const FileService = {
+	create: async (discord_id: string, channel_id: string, body: FileServiceCreateRequest) => {
 		const file = await prisma.homeworkFile.create({
             data: {
                 ...body,
@@ -27,14 +27,14 @@ export const FileService: FileServiceType = {
 
         return { file, channel }
 	},
-	getAll: async (discord_id) => {
+	getAll: async (discord_id: string) => {
 		const files = await prisma.homeworkFile.findMany({
             where: { owner_id: discord_id }
         })
 
         return { files }
 	},
-	update: async (discord_id, file_id, body) => {
+	update: async (discord_id: string, file_id: number, body: FileServiceUpdateRequest) => {
         const file = await prisma.homeworkFile.findUnique({ where: { file_id } })
         if (!file) {
             throw new Error("File not found")
@@ -50,7 +50,7 @@ export const FileService: FileServiceType = {
             }
         })
 	},
-	delete: async (discord_id, file_id) => {
+	delete: async (discord_id: string, file_id: number) => {
         const file = await prisma.homeworkFile.findUnique({ where: { file_id } })
         if (!file) {
             throw new Error("File not found")

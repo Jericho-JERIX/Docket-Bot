@@ -19,7 +19,7 @@ export async function listHomeworksByChannelId(
 		return NotOpenCollectionError();
 	}
 
-	const homeworkResponse: HomeworkServiceGetAllResponse = response.data;
+	const homeworkResponse: HomeworkServiceGetAllResponse = response;
 
 	const message = HomeworkList(
 		homeworkResponse.file,

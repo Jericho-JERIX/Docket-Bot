@@ -49,12 +49,12 @@ export const CreateFile: SlashCommand = {
 		const body: FileServiceCreateRequest = {
 			filename: filename,
 		};
-		const reponse = await FileService.create(
+		const response = await FileService.create(
 			interaction.user.id,
 			interaction.channelId,
 			body
 		);
-		const fileResponse: FileServiceCreateResponse = reponse.data;
+		const fileResponse: FileServiceCreateResponse = response;
 
 		const message = FileSetting(
 			`✅ ${FilenameText(
