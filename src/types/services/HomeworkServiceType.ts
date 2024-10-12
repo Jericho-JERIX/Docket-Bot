@@ -58,18 +58,18 @@ export type HomeworkServiceType = {
 	update: (
 		discord_id: string,
 		channel_id: string,
-		homework_id: string,
+		homework_id: number,
 		body: HomeworkServiceUpdateRequest
 	) => Promise<any>;
 	delete: (
 		discord_id: string,
 		channel_id: string,
-		homework_id: string
+		homework_id: number
 	) => Promise<any>;
 	check: (
 		discord_id: string,
 		channel_id: string,
-		homework_id: string,
+		homework_id: number,
 		body: HomeworkServiceCheckRequest
 	) => Promise<any>;
 };
