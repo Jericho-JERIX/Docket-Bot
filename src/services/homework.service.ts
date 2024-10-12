@@ -194,28 +194,46 @@ export const HomeworkService: HomeworkServiceType = {
 
 	},
 	delete: async (discord_id, channel_id, homework_id) => {
-		return axios
-			.delete(
-				`${BACKEND_URL}/account/${discord_id}/channel/${channel_id}/homework/${homework_id}`
-			)
-			.then((res) => {
-				return res;
-			})
-			.catch((err) => {
-				return err.response;
-			});
+		const channel = await prisma.homeworkChannel.findUnique({
+            where: { channel_id },
+            include: { homework_file: true }
+        })
+
+        if (!channel) {
+            return { status: 404 }
+        }
+
+        const authResponse = await homeworkManageAuth(discord_id, channel);
+        if (authResponse.status >= 400) {
+            return authResponse.status
+        }
+
+        await prisma.homework.delete({
+            where: { homework_id }
+        })
+
+        return { status: 204 }
 	},
 	check: async (discord_id, channel_id, homework_id, body) => {
-		return axios
-			.put(
-				`${BACKEND_URL}/account/${discord_id}/channel/${channel_id}/homework/${homework_id}/check`,
-				body
-			)
-			.then((res) => {
-				return res;
-			})
-			.catch((err) => {
-				return err.response;
-			});
+		const channel = await prisma.homeworkChannel.findUnique({
+            where: { channel_id },
+            include: { homework_file: true }
+        })
+
+        if (!channel) {
+            return { status: 404 }
+        }
+
+        const authResponse = await homeworkManageAuth(discord_id, channel);
+        if (authResponse.status >= 400) {
+            return authResponse.status
+        }
+
+        return prisma.homework.update({
+            where: { homework_id },
+            data: {
+                is_checked: body.is_checked
+            }
+        })
 	},
 };
