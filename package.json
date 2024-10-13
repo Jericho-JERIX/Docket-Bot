@@ -20,6 +20,7 @@
 	},
 	"scripts": {
 		"build": "tsc",
+		"build-exe": "bun build src/index.ts --compile --outfile Docket",
 		"start": "node .",
 		"dev": "nodemon --config nodemon.json src/index.ts",
         "test": "jest"
