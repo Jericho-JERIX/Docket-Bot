@@ -7,7 +7,7 @@ import { Homework, HomeworkChannel, HomeworkFile } from "@prisma/client";
 import { yearDecider } from "../util/YearDecider";
 import { searchHomework } from "../util/SearchHomework";
 
-const MAX_TIMESTAMP = 9999999999;
+const MAX_TIMESTAMP = new Date(99999999999);
 const DELTA_TIME_SECOND = 0
 
 async function homeworkManageAuth(discord_id: string, channel: HomeworkChannel & { homework_file: HomeworkFile }) {
@@ -77,7 +77,7 @@ export const HomeworkService: HomeworkServiceType = {
         return prisma.homework.create({
             data: {
                 file_id: channel.file_id,
-                timestamp: finalTimestamp,
+                timestamp: new Date(finalTimestamp),
                 day_name: new Date(finalTimestamp).toLocaleDateString("en-US", { weekday: "long" }),
                 no_deadline: false,
                 date: body.date,
@@ -179,7 +179,7 @@ export const HomeworkService: HomeworkServiceType = {
                 23, 59, 59
             ).getTime()
 
-            newHomeworkData.timestamp = newTimestamp + DELTA_TIME_SECOND
+            newHomeworkData.timestamp = new Date(newTimestamp + DELTA_TIME_SECOND)
             newHomeworkData.day_name = new Date(newHomeworkData.timestamp).toLocaleDateString("en-US", { weekday: "long" })
         }
 

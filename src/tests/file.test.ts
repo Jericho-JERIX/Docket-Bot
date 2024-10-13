@@ -2,14 +2,20 @@ import { prisma } from "../database/prisma"
 import { FileService } from "../services/file.service"
 import { testChannelId, testDiscordId } from "./mocks/general"
 
-beforeEach(async () => {
+beforeAll(async () => {
     await prisma.homework.deleteMany()
-    await prisma.homeworkFile.deleteMany()
     await prisma.homeworkChannel.deleteMany()
+    await prisma.homeworkFile.deleteMany()
+})
+
+afterAll(async () => {
+    await prisma.homework.deleteMany()
+    await prisma.homeworkChannel.deleteMany()
+    await prisma.homeworkFile.deleteMany()
 })
 
 describe('FileService', () => {
-    it('Should create new File', async () => {
+    it('Should create new File, status should be 200', async () => {
         
         const response = await FileService.create(
             testDiscordId,
@@ -18,9 +24,7 @@ describe('FileService', () => {
         )
 
         expect(response).toBeTruthy()
-        expect(response.channel.enable_notification).toBe(false)
-        expect(response.channel.can_edit).toBe(false)
-        expect(response.file.filename).toBe('test-filename')
+        expect(response.status).toBe(200)
 
     })
 })

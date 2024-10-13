@@ -25,7 +25,7 @@ export const FileService = {
             }
         })
 
-        return { file, channel }
+        return { status: 200, file, channel }
 	},
 	getAll: async (discord_id: string) => {
 		const files = await prisma.homeworkFile.findMany({
@@ -42,13 +42,15 @@ export const FileService = {
         if (file.owner_id !== discord_id) {
             throw new Error("You are not the owner of this file")
         }
-		return prisma.homeworkFile.update({
+		const response = await prisma.homeworkFile.update({
             where: { file_id },
             data: {
                 ...body,
                 filename: formatFilename(body.filename),
             }
         })
+
+        return { status: 200, ...response }
 	},
 	delete: async (discord_id: string, file_id: number) => {
         const file = await prisma.homeworkFile.findUnique({ where: { file_id } })
@@ -58,8 +60,10 @@ export const FileService = {
         if (file.owner_id !== discord_id) {
             throw new Error("You are not the owner of this file")
         }
-		return prisma.homeworkFile.delete({
+		const response = await prisma.homeworkFile.delete({
             where: { file_id }
         })
+
+        return { status: 204, ...response }
 	},
 };

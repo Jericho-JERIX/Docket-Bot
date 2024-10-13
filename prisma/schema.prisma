@@ -28,7 +28,7 @@ model Homework {
     date            Int
     month           Int
     year            Int
-    timestamp       Int
+    timestamp       DateTime
     day_name        String
     type            String
     label           String 
