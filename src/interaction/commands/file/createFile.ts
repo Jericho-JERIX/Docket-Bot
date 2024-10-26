@@ -55,8 +55,6 @@ export const CreateFile: SlashCommand = {
 			body
 		);
 
-        console.log(fileResponse)
-
 		const message = FileSetting(
 			`✅ ${FilenameText(
 				fileResponse.file.filename
