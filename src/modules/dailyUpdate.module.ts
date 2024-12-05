@@ -7,7 +7,7 @@ import { HomeworkType } from "../constants/homework";
 
 export async function broadcastTodoListToAllChannels(client: Client) {
 	const response = await ChannelService.getAll();
-	const data: ChannelServiceGetAllResponse = response.data;
+	const data: ChannelServiceGetAllResponse = response;
 
 	for (const channel of data.channels) {
 		const targetChannel = client.channels.cache.get(channel.channel_id);

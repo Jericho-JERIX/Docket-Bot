@@ -23,7 +23,7 @@ export async function getAllHomeworkChoices(
 	}
 
 	const homeworkServiceResponse: HomeworkServiceGetAllResponse =
-		response.data;
+		response;
 	const choices = homeworkServiceResponse.homeworks
 		// .filter((homework: DocketHomework) => filterFunction(homework))
 		.map((homework) => ({

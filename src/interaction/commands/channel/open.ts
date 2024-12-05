@@ -34,7 +34,7 @@ export const Open: SlashCommand = {
 	async onCommandExecuted(interaction) {
 		const fileId = interaction.options.getString("collection");
 
-		if (!interaction.guild) {
+		if (!interaction.guild || !fileId) {
 			return;
 		}
 
@@ -52,7 +52,7 @@ export const Open: SlashCommand = {
 		await ChannelService.openFile(
 			interaction.user.id,
 			interaction.channelId,
-			String(fileId)
+			parseInt(fileId)
 		);
 
 		const message = await listHomeworksByChannelId(
