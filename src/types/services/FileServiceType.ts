@@ -34,8 +34,8 @@ export type FileServiceType = {
 	) => Promise<any>;
 	update: (
 		discord_id: string,
-		file_id: string,
+		file_id: number,
 		body: FileServiceUpdateRequest
 	) => Promise<any>;
-	delete: (discord_id: string, file_id: string) => Promise<any>;
+	delete: (discord_id: string, file_id: number) => Promise<any>;
 };

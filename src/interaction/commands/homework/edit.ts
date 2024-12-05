@@ -83,7 +83,7 @@ export const Edit: SlashCommand = {
 		const response = await HomeworkService.update(
 			interaction.user.id,
 			interaction.channelId,
-			homeworkId,
+			parseInt(homeworkId),
 			body
 		);
 

@@ -7,7 +7,7 @@ export async function getAllFilesChoices(
 	discordId: string
 ): Promise<SlashCommandOptionChoice[]> {
 	const response = await FileService.getAll(discordId);
-	const fileResponse: FileServiceGetAllResponse = response.data;
+	const fileResponse: FileServiceGetAllResponse = response;
 
 	const choices: SlashCommandOptionChoice[] = fileResponse.files.map(
 		(file) => ({

@@ -53,7 +53,7 @@ export const Delete: SlashCommand = {
 		const response = await HomeworkService.delete(
 			interaction.user.id,
 			interaction.channelId,
-			String(homeworkId)
+			parseInt(homeworkId)
 		);
 
 		if (response.status === 401) {

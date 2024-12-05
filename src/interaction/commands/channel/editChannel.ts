@@ -66,7 +66,7 @@ export const EditChannel: SlashCommand = {
 			return;
 		}
 
-		const channelResponse: DocketChannel = response.data;
+		const channelResponse: DocketChannel = response;
 
 		const message = ChannelDetail(
 			interaction.user.id,

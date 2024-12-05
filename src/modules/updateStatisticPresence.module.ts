@@ -5,7 +5,7 @@ import { StatisticServiceGetGeneralResponse } from "../types/services/StatisticS
 
 async function setPresence(client: Client) {
 	const response = await StatisticService.getGeneral();
-	const statisticResponse: StatisticServiceGetGeneralResponse = response.data;
+	const statisticResponse: StatisticServiceGetGeneralResponse = response;
 	client.user?.setPresence({
 		activities: [
 			{

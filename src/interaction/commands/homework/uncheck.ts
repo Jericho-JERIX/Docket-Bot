@@ -48,7 +48,7 @@ export const Uncheck: SlashCommand = {
 		const response = await HomeworkService.check(
 			interaction.user.id,
 			interaction.channelId,
-			String(homeworkId),
+			parseInt(homeworkId),
 			body
 		);
 

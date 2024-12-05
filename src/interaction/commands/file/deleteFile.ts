@@ -40,7 +40,7 @@ export const DeleteFile: SlashCommand = {
 			return;
 		}
 
-		await FileService.delete(interaction.user.id, fileId);
+		await FileService.delete(interaction.user.id, parseInt(fileId));
 
 		const message = FileSetting(`✅ File has been deleted`);
 		await interaction.reply(message);

@@ -6,7 +6,7 @@ export function populateDocketHomework(
 	homework: DocketHomework
 ): PopulatedDocketHomework {
 	const dayLeft = Math.floor(
-		(homework.timestamp * 1000 - Date.now()) / 86400000
+		(homework.timestamp - Date.now()) / 86400000
 	);
 	const type =
 		HomeworkTypeIcon[
