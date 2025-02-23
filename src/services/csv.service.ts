@@ -1,5 +1,6 @@
 import { Homework } from "@prisma/client";
 import { writeFileSync } from "fs";
+import { DocketHomework } from "../types/services/HomeworkServiceType";
 
 interface CSVField {
     date: number;
@@ -11,7 +12,7 @@ interface CSVField {
 
 export default class CSVService {
 
-    private static createFilename() {
+    static generateDatetimeSuffix() {
         const date = new Date();
 
         const day = String(date.getDate()).padStart(2, '0');
@@ -21,16 +22,17 @@ export default class CSVService {
         const minutes = String(date.getMinutes()).padStart(2, '0');
         const seconds = String(date.getSeconds()).padStart(2, '0');
 
-        const formattedDate = `homework_${day}${month}${year}T${hours}${minutes}${seconds}`;
+        return `${day}${month}${year}T${hours}${minutes}${seconds}`;
     }
 
-    static exportToCsv(homeworkList: Homework[], filename: string) {
+    static exportToCsv(homeworkList: DocketHomework[], filename: string) {
+        const filepath = `dumps/${filename}`
         const header = "date,month,year,type,label"
         const content = homeworkList.map((homework) => {
             return `${homework.date},${homework.month},${homework.year},${homework.type},${homework.label}`
         }).join("\n");
         const csvString = `${header}\n${content}`;
-        writeFileSync(filename, csvString);
-        return { filename }
+        writeFileSync(filepath, csvString);
+        return { filename, filepath }
     }
 }
