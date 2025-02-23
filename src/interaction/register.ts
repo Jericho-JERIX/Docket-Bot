@@ -12,6 +12,7 @@ import { EditFile } from "./commands/file/editFile";
 import { DeleteFile } from "./commands/file/deleteFile";
 import { Check } from "./commands/homework/check";
 import { Uncheck } from "./commands/homework/uncheck";
+import { ImportCSV } from "./commands/homework/import-csv";
 
 dotenv.config();
 
@@ -34,6 +35,7 @@ export async function registerCommands(): Promise<SlashCommandObject> {
 		DeleteFile,
 		Check,
 		Uncheck,
+		ImportCSV,
 	];
 
 	let commandsObject: SlashCommandObject = {};
