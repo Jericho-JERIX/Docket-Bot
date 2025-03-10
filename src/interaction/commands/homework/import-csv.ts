@@ -7,7 +7,7 @@ import {
     HomeworkServiceCheckRequest,
 } from "../../../types/services/HomeworkServiceType";
 import { HomeworkType } from "../../../constants/homework";
-import { HomeworkService } from "../../../services/homework.service";
+import HomeworkServiceV2, { HomeworkService } from "../../../services/homework.service";
 import { HomeworkCard } from "../../../templates/components/HomeworkCard";
 import { ClearedHomeworkCard } from "../../../templates/components/ClearedHomeworkCard";
 import { listHomeworksByChannelId } from "../../../modules/listHomeworksByChannelId.module";
@@ -31,28 +31,17 @@ export const ImportCSV: SlashCommand = {
             type: ApplicationCommandOptionType.Attachment,
             required: true,
             autocomplete: true,
-        },
-        {
-            name: "name",
-            description: "Enter the name for this Collection",
-            type: ApplicationCommandOptionType.String,
-            required: true
         }
     ],
 
     async onCommandExecuted(interaction) {
         const csv = interaction.options.getAttachment("csv")
-        const filename = interaction.options.getString("name")
 
-        if (!filename || !csv) {
+        if (!csv || !csv.contentType?.includes('text/csv')) {
             return;
         }
 
-        if (!csv.contentType?.includes('text/csv')) {
-            return;
-        }
-
-        console.log(csv)
+        HomeworkServiceV2.importFromCSV(csv.url)
         interaction.reply("Done")
     },
 };

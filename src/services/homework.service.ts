@@ -268,3 +268,29 @@ export const HomeworkService: HomeworkServiceType = {
 		});
 	},
 };
+
+export default class HomeworkServiceV2 {
+	static async importFromCSV(csvUrl: string, options: { header: boolean } = { header: true }) {
+		console.log(csvUrl);
+		// Readfile from URL
+		const data = await axios.get(csvUrl);
+
+		let textlines: string[] = data.data.split('\n')
+
+		if (options?.header) {
+			textlines = textlines.slice(1);
+		}
+
+		await prisma.homework.createMany({
+			data: textlines.map((line) => {
+				const [ date,month,year,type,label ] = line.split(',');
+				return {
+					date: parseInt(date),
+					month: parseInt(month),
+					year: parseInt(year),
+					type: type as HomeworkType,
+				}
+			})
+		})
+	}
+}
