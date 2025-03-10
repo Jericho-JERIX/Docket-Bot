@@ -1,7 +1,6 @@
-import axios from "axios";
-import { BACKEND_URL } from "../constants/service";
-import { FileServiceCreateRequest, FileServiceType, FileServiceUpdateRequest } from "../types/services/FileServiceType";
 import { prisma } from "../database/prisma";
+import HomeworkChannelRepository from "../repositories/HomeworkChannel";
+import { FileServiceCreateRequest, FileServiceUpdateRequest } from "../types/services/FileServiceType";
 import { formatFilename } from "../util/FormatFilename";
 
 export const FileService = {
@@ -67,3 +66,10 @@ export const FileService = {
         return { status: 204, ...response }
 	},
 };
+
+export default class HomeworkFileService {
+    static async getByChannelId(channelId: string) {
+        const channel = await HomeworkChannelRepository.getByChannelId(channelId);
+        return channel.homework_file;
+    }
+}
