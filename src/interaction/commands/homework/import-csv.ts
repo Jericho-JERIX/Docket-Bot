@@ -9,6 +9,7 @@ import { NoChannelPermissionnError } from "../../../templates/messages/errors/No
 import { SlashCommand } from "../../../types/SlashCommand";
 import { SlashCommandOptionChoice } from "../../../types/SlashCommandOption";
 import { NoHomeworkPermissionError } from "../../../templates/messages/errors/NoHomeworkPermissionError";
+import { ImportCSVInfo } from "../../../templates/messages/info/ImportCSVInfo";
 
 const TypeChoices: SlashCommandOptionChoice[] = [
 	{ name: "📝 Assignment", value: "ASSIGNMENT" },
@@ -24,7 +25,7 @@ export const ImportCSV: SlashCommand = {
 			name: "csv",
 			description: "Select a To-do item to be uncheck",
 			type: ApplicationCommandOptionType.Attachment,
-			required: true,
+			required: false,
 			autocomplete: true,
 		},
 	],
@@ -33,7 +34,9 @@ export const ImportCSV: SlashCommand = {
 		const csv = interaction.options.getAttachment("csv");
 
 		if (!csv || !csv.contentType?.includes("text/csv")) {
-			return;
+			const message = ImportCSVInfo();
+            await interaction.reply({ ...message, ephemeral: true });
+            return;
 		}
 
 		const userId = interaction.user.id;
@@ -46,6 +49,7 @@ export const ImportCSV: SlashCommand = {
 		if (!permission) {
 			const message = NoHomeworkPermissionError();
 			await interaction.reply({ ...message, ephemeral: true });
+            return;
 		}
 
 		const file = await HomeworkFileService.getByChannelId(channelId);
@@ -58,6 +62,7 @@ export const ImportCSV: SlashCommand = {
 		if (response instanceof Error) {
 			const message = CustomError(response.message);
 			await interaction.reply({ ...message, ephemeral: true });
+            return;
 		}
 
 		const message = await listHomeworksByChannelId(
@@ -66,5 +71,6 @@ export const ImportCSV: SlashCommand = {
 			""
 		);
 		await interaction.reply(message);
+        return;
 	},
 };
