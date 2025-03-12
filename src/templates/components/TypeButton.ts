@@ -19,5 +19,10 @@ export function TypeButton(): ActionRowBuilder<any> {
 			.setLabel("🔥 Exam")
 			.setStyle(ButtonStyle.Danger)
 			.setCustomId(HomeworkType.EXAM)
+	).addComponents(
+		new ButtonBuilder()
+			.setLabel("Export to CSV")
+			.setStyle(ButtonStyle.Primary)
+			.setCustomId("export-csv")
 	);
 }
