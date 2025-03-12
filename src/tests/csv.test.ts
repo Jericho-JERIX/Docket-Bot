@@ -7,6 +7,6 @@ import { GetAllHomeworkService } from "../types/services/HomeworkServiceType";
     const homeworks = (response as GetAllHomeworkService).homeworks
 
     // console.log(homeworks)
-    const result = CSVService.exportToCsv(homeworks, "aaa")
-    console.log(result)
+    // const result = CSVService.exportToCsv(homeworks, "aaa")
+    // console.log(result)
 })()
