@@ -272,8 +272,7 @@ export const HomeworkService: HomeworkServiceType = {
 
 export default class HomeworkServiceV2 {
 	static async importFromCSV(csvUrl: string, fileId: number, options: { header: boolean } = { header: true }) {
-		console.log(csvUrl);
-		// Readfile from URL
+
 		const data = await axios.get(csvUrl);
 
 		let textlines: string[] = data.data.split('\n')

@@ -2,6 +2,7 @@ import axios from "axios";
 import { BACKEND_URL } from "../constants/service";
 import { ChannelServiceType } from "../types/services/ChannelServiceType";
 import { prisma } from "../database/prisma";
+import HomeworkChannelRepository from "../repositories/HomeworkChannel";
 
 export const ChannelService: ChannelServiceType = {
 	getAll: async () => {
@@ -51,3 +52,10 @@ export const ChannelService: ChannelServiceType = {
 
 	},
 };
+
+export default class ChannelServiceV2 {
+    static async isUserCanEditChannel(discordId: string, channelId: string) {
+        const channel = await HomeworkChannelRepository.getByChannelId(channelId);
+        return channel.can_edit || channel.homework_file.owner_id === discordId
+    }
+}
