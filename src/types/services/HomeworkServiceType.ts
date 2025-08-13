@@ -1,3 +1,4 @@
+import { Homework, HomeworkFile } from "@prisma/client";
 import { HomeworkType } from "../../constants/homework";
 import { DocketFile } from "./FileServiceType";
 
@@ -43,6 +44,13 @@ export type HomeworkServiceUpdateRequest = {
 export type HomeworkServiceCheckRequest = {
 	is_checked: boolean;
 };
+
+export interface GetAllHomeworkService {
+	file: HomeworkFile,
+	total_homework_count: number,
+	type_homework_count: number,
+	homeworks: Homework[],
+}
 
 export type HomeworkServiceType = {
 	getAll: (

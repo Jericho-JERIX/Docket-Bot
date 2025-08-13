@@ -4,3 +4,5 @@ node_modules/
 build/
 *.exe
 *.db
+
+dumps/*.csv

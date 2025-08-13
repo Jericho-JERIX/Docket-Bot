@@ -7,6 +7,7 @@ import { Homework, HomeworkChannel, HomeworkFile } from "@prisma/client";
 import { yearDecider } from "../util/YearDecider";
 import { searchHomework } from "../util/SearchHomework";
 import { isValidDate } from "../util/IsValidDate";
+import HomeworkRepository from "../repositories/Homework";
 
 const MAX_TIMESTAMP = new Date(9999999999999);
 const DELTA_TIME_SECOND = 0;
@@ -268,3 +269,30 @@ export const HomeworkService: HomeworkServiceType = {
 		});
 	},
 };
+
+export default class HomeworkServiceV2 {
+	static async importFromCSV(csvUrl: string, fileId: number, options: { header: boolean } = { header: true }) {
+
+		const data = await axios.get(csvUrl);
+
+		let textlines: string[] = data.data.split('\n')
+
+		if (options?.header) {
+			textlines = textlines.slice(1);
+		}
+
+		const payload = textlines.map((line) => {
+            const [ date,month,year,type,label ] = line.split(',');
+            return {
+                date: parseInt(date),
+                month: parseInt(month),
+                year: parseInt(year),
+                type: type as HomeworkType,
+                label,
+                fileId,
+            }
+        })
+
+        return HomeworkRepository.bulkCreate(payload);
+	}
+}
