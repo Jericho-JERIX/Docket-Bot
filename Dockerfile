@@ -1,12 +1,8 @@
-FROM node:alpine
+FROM node:20
 
 WORKDIR /app
-
 COPY package*.json ./
-
-RUN npm install && npm install typescript -g
-
+RUN npm install
 COPY . .
 
-RUN tsc
-CMD [ "node", "./build/index.js" ]
+CMD ["npm", "start"]
